@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+
+
 app_name = 'panel'
 urlpatterns = [
     path('',views.index, name='index'),
@@ -10,4 +12,5 @@ urlpatterns = [
     path('updategeografis/<str:pk>',views.update_geografis, name='updategeografis'),
     path('pemerintahdistrik/',views.pemerintah, name='pemerintah'),
     path('addpemerintah/',views.add_pemerintah, name='addpemerintah'),
+    path('hapuspemerintah/<str:pk>',views.hapus_pemerintah, name='hapuspemerintah'),
 ]

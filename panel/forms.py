@@ -34,13 +34,13 @@ class GeografisForm(ModelForm):
 class PemerintahForm(ModelForm):
     class Meta:
         model = Pemerintah
-        fields = ('nama', 'golongan', 'jabatan',)
+        fields = ('nama', 'golongan', 'jabatan', 'foto')
 
         widgets = {
             'nama': forms.TextInput(attrs={'class': 'form-control', 'id': 'basic-default-name', 'placeholder': 'Masukan Nama..'}),
             'golongan': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Masukan Golongan', 'aria-label': 'Isikan Geografis Distrik disini..', 'aria-describedby': 'basic-icon-default-message2'}),
             'jabatan': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Masukan Jabatan', 'aria-label': 'Isikan Geografis Distrik disini..', 'aria-describedby': 'basic-icon-default-message2'}),
-            # 'foto': forms.ImageField(attrs={'class': 'form-control', 'placeholder': 'Isikan Geografis Distrik disini..', 'aria-label': 'Isikan Geografis Distrik disini..', 'aria-describedby': 'basic-icon-default-message2'}),
+            # 'foto': forms.Imagefield(attrs={'class': 'form-control', 'type': 'file'}),
         }
 
 

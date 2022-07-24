@@ -81,7 +81,11 @@
                                   title="{{ pemerintah.nama }}"
                                 >
                                   <a href="#">
-                                  <img src="{{ pemerintah.foto.url }}" alt="Avatar" class="rounded-circle" />
+                                    {% if pemerintah.foto %}
+                                    <img src="{{ pemerintah.foto.url }}" alt="Avatar" class="rounded-circle" />
+                                    {% else %}
+                                    <img src="{% static 'img/about.jpg' %}" alt="Avatar" class="rounded-circle" />
+                                    {% endif %}
                                   </a>
                                 </li>
                               </ul>

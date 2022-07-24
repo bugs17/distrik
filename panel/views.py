@@ -107,12 +107,36 @@ def pemerintah(request):
 
 # tambah data pemerintah
 def add_pemerintah(request):
+    if request.method == 'POST':
+        form = PemerintahForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            form = PemerintahForm()
+            pesan = 'Data berhasil ditambahkan'
+            context ={
+                'title' : 'Panel | Tambah data',
+                'keterangan': 'Tambah Data',
+                'form': form,
+                'pesan': pesan,
+            }
 
-    form = PemerintahForm( request.POST or None)
+            return render(request, 'panel/add_pemerintah.html', context)
+    else:
 
-    context = {
-        'title' : 'Panel | Tambah data',
-        'keterangan': 'Tambah Data',
-        'form': form,
-    }
+        form = PemerintahForm()
+
+        context = {
+            'title' : 'Panel | Tambah data',
+            'keterangan': 'Tambah Data',
+            'form': form,
+        }
     return render(request, 'panel/add_pemerintah.html', context)
+
+
+# hapus data pemerintah
+def hapus_pemerintah(request, pk):
+    hapus_pemerintah = Pemerintah.objects.filter(id=pk)
+    hapus_pemerintah.delete()
+    
+
+    return redirect('panel:pemerintah')
