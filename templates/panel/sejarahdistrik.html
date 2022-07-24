@@ -1,0 +1,38 @@
+{% extends '../adminbase.html' %}
+
+
+{% block content %}
+<div >
+
+  {% for sejarah in sejarah %}
+  
+    <div class="card accordion-item active">
+                      <h2 class="accordion-header" id="headingOne">
+                        <div
+                          class="accordion-button"
+                          aria-expanded="true"
+                          aria-controls="accordionOne"
+                        >
+                        <h3>
+                        {{ sejarah.judul }}
+                        </h3>
+                        </div>
+                      </h2>
+
+                      <div
+                        id="accordionOne"
+                        class="accordion-collapse collapse show"
+                        data-bs-parent="#accordionExample"
+                      >
+                        <div class="accordion-body">
+                            {{sejarah.body | safe}}
+                        </div>
+                      </div>
+        
+    </div>
+     <a href="{% url 'panel:updatesejarah' sejarah.id %}" class="btn btn-success tombolupdate">Update</a>
+                <!-- <button type="button" class="btn btn-success">Update</button> -->
+     {% endfor %}
+</div>
+{% endblock content %}
+    

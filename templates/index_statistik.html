@@ -1,0 +1,134 @@
+{% load static %}
+
+<section>
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="three">
+                <h1>Statistik</h1>
+            </div>
+            <div class="row gap-4 ">
+                <div class="col-md-4 col-6 shadow">
+                    <div class="chartBox">
+                        <center><p>Jumlah kepala keluarga berdasarkan Kampung</p></center>
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-6 shadow">
+                    <div class="chartBox2">
+                        <center><p>Perkembangan jumlah jiwa berdsarkan kampung</p></center>
+                        <canvas id="myChart2"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="py-5">
+
+                <a href="#" class="btn btn-primary py-3 px-5">Statistik lainnya</a>
+            </div>
+            
+        </div>
+
+    </div>
+
+    <script>
+
+        // ############# data chart Kampung
+        // setup
+        const data = {
+            
+            labels: [{% for kk in kk %} '{{kk.kampung_id}}', {% endfor %}],
+                datasets: [{
+                    label: 'Jumlah KK',
+                    // data: [12, 19, 3, 5, 2, 3],
+                    data: [{% for kk in kk %} {{kk.jumlahKK}}, {% endfor %}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgb(71, 197, 190, 1)',
+                       
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgb(71, 197, 190, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+        };
+
+
+        // config
+        const config = {
+            type: 'bar',
+            data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        // render init block
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+    // #################### endchart
+
+    // ############### chart 2 use pie
+
+    // setup
+    const data2 = {
+            
+            labels: [{% for kampung in semuaKampung %} '{{ kampung.kampung_id }}', {% endfor %}],
+                datasets: [{
+                    label: 'Jumlah Jiwa',
+                    // data: [12, 19, 3, 5, 2, 3],
+                    data: [{% for all in all %} {{all.jumlah__sum}}, {% endfor %}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                       
+                    ],
+                    borderColor: [
+                        'white',
+                        'white',
+                        'white',
+                        'white',
+                    ],
+                    borderWidth: 1
+                }]
+        };
+
+        // config 2
+        const config2 = {
+            type: 'pie',
+            data: data2,
+            options: {}
+        };
+
+        // render init block 2
+        const myChart2 = new Chart(
+            document.getElementById('myChart2'),
+            config2
+        );
+
+        
+
+
+    </script>
+</section>

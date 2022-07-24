@@ -1,0 +1,133 @@
+{% load static %}
+
+
+{% url 'panel:index' as index %}
+{% url 'panel:getsejarah' as getsejarah %}
+{% url 'panel:getgeografis' as getgeografis %}
+
+
+
+
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+    <div class="app-brand demo">
+      <a href="#" class="app-brand-link">
+        <span class="app-brand-logo demo">
+          <img src="{% static 'img/logo.png' %}" alt="Logo" style="width: 50px;" >
+        </span>
+        
+      </a>
+
+      <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+        <i class="bx bx-chevron-left bx-sm align-middle"></i>
+      </a>
+    </div>
+
+    <div class="menu-inner-shadow"></div>
+
+    <ul class="menu-inner py-1">
+      <!-- Dashboard -->
+      <li class="menu-item {% if request.path == index %} active {% endif %}">
+        <a href="{% url 'panel:index' %}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-home-circle"></i>
+          <div data-i18n="Analytics">Dashboard</div>
+        </a>
+      </li>
+
+      
+      
+
+      <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Halaman</span>
+      </li>
+      <li class="menu-item {% if request.path == getsejarah %} active {% elif request.path == '/panel/updatesejarah/1' %} active {% elif request.path == getgeografis %} active {% elif request.path == '/panel/updategeografis/1' %} active {% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-dock-top"></i>
+          <div data-i18n="Account Settings">Distrik</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item {% if request.path == getsejarah %} active {% elif request.path == '/panel/updatesejarah/1' %} active {% endif %} " >
+            <a href="{% url 'panel:getsejarah' %}" class="menu-link">
+              <div data-i18n="Account">Sejarah Distrik</div>
+            </a>
+          </li>
+          <li class="menu-item {% if request.path == getgeografis %} active {% elif request.path == '/panel/updategeografis/1' %} active {% endif %}">
+            <a href="{% url 'panel:getgeografis' %}" class="menu-link">
+              <div data-i18n="Notifications">Geografis Distrik</div>
+            </a>
+          </li>
+          
+        </ul>
+      </li>
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-dock-top"></i>
+          <div data-i18n="Authentications">Pemerintahan</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="{% url 'panel:pemerintah' %}" class="menu-link" >
+              <div data-i18n="Basic">Pemerintah Distrik</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="#" class="menu-link">
+              <div data-i18n="Basic">Struktur Organisasi</div>
+            </a>
+          </li>
+          
+        </ul>
+
+        <li class="menu-item">
+          <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+            <div data-i18n="Misc">Layanan</div>
+          </a>
+          <ul class="menu-sub">
+            <li class="menu-item">
+              <a href="#" class="menu-link">
+                <div data-i18n="Error">Administrasi</div>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="menu-item">
+          <a href="#" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-collection"></i>
+            <div data-i18n="Basic">Berita</div>
+          </a>
+        </li>
+        
+        <li class="menu-item">
+          <a href="#" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-data"></i>
+            <div data-i18n="Basic">Data</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="#" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-images"></i>
+            <div data-i18n="Basic">Galery</div>
+          </a>
+        </li>
+      </li>
+      
+      
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">Admin</span></li>
+      
+      <li class="menu-item">
+        <a href="#" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-user"></i>
+          <div data-i18n="Basic">User</div>
+        </a>
+      </li>
+
+      <li class="menu-item">
+        <a href="#" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-log-out"></i>
+          <div data-i18n="Basic">Keluar</div>
+        </a>
+      </li>
+
+    </ul>
+  </aside>
