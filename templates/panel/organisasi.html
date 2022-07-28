@@ -32,7 +32,7 @@
                         <tr>
                           <th>Nama</th>
                           <th>Jabatan</th>
-                          <th>Pangkat</th>
+                          <th>Golongan</th>
                           <th>Nip</th>
                           <th>Foto</th>
                           <th>Pendidikan</th>
@@ -41,11 +41,11 @@
                       <tbody>
                         <tr>
                           <td>
-                             <strong>Rionaldi</strong>
+                             <strong>{{camat.nama}}</strong>
                           </td>
                           <td>Kepala Distrik</td>
-                          <td><span>3A</span></td>
-                          <td><span>090909090909</span></td>
+                          <td><span>{{camat.golongan}}</span></td>
+                          <td><span>{{camat.nip}}</span></td>
                           <td>
                             <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
                               <li
@@ -53,13 +53,13 @@
                                 data-popup="tooltip-custom"
                                 data-bs-placement="top"
                                 class="avatar avatar-xs pull-up"
-                                title="Lilian Fuller"
+                                title="Foto Profil {{ camat.nama }}"
                               >
-                                <img src="{% static 'img/about.jpg' %}" alt="foto profil" class="rounded-circle" />
+                                <img src="{{camat.foto.url}}" alt="foto profil" class="rounded-circle" />
                               </li>
                             </ul>
                           </td>
-                          <td><span>Sarjana Ekonomi</span></td>
+                          <td><span>{{camat.pendidikan}}</span></td>
                         </tr>
                       </tbody>
                     </table>

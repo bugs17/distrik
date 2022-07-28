@@ -4,6 +4,11 @@
 {% url 'panel:index' as index %}
 {% url 'panel:getsejarah' as getsejarah %}
 {% url 'panel:getgeografis' as getgeografis %}
+{% url 'panel:pemerintah' as pemerintah %}
+{% url 'panel:addpemerintah' as addpemerintah %}
+{% url 'panel:organisasi' as organisasi %}
+{% url 'panel:administrasi' as administrasi %}
+{% url 'panel:addadministrasi' as addadministrasi %}
 
 
 
@@ -58,18 +63,18 @@
           
         </ul>
       </li>
-      <li class="menu-item">
+      <li class="menu-item {% if request.path == pemerintah %} active {% elif request.path == organisasi %} active {% elif request.path == addpemerintah %} active {% elif request.path == '/panel/updateorganisasi/1' %} active {% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-dock-top"></i>
           <div data-i18n="Authentications">Pemerintahan</div>
         </a>
         <ul class="menu-sub">
-          <li class="menu-item">
+          <li class="menu-item {% if request.path == pemerintah %} active {% elif request.path == addpemerintah %} active {% endif %}">
             <a href="{% url 'panel:pemerintah' %}" class="menu-link" >
               <div data-i18n="Basic">Pemerintah Distrik</div>
             </a>
           </li>
-          <li class="menu-item">
+          <li class="menu-item {% if request.path == organisasi %} active {% elif request.path == '/panel/updateorganisasi/1' %} active {% endif %}">
             <a href="{% url 'panel:organisasi' %}" class="menu-link">
               <div data-i18n="Basic">Struktur Organisasi</div>
             </a>
@@ -77,14 +82,14 @@
           
         </ul>
 
-        <li class="menu-item">
+        <li class="menu-item {% if request.path == administrasi %} active {% elif request.path == addadministrasi %} active {% endif %}">
           <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-dock-top"></i>
             <div data-i18n="Misc">Layanan</div>
           </a>
           <ul class="menu-sub">
-            <li class="menu-item">
-              <a href="#" class="menu-link">
+            <li class="menu-item {% if request.path == administrasi %} active {% elif request.path == addadministrasi %} active {% endif %}">
+              <a href="{% url 'panel:administrasi' %}" class="menu-link">
                 <div data-i18n="Error">Administrasi</div>
               </a>
             </li>

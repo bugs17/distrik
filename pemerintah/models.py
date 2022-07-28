@@ -4,8 +4,9 @@ from django.db import models
 
 class Pemerintah(models.Model):
     opsi = (
-        ('Camat', 'CAMAT'),
-        ('Sekretaris', 'SEKRETARIS')
+        ('camat', 'CAMAT'),
+        ('sekretaris', 'SEKRETARIS'),
+        ('subag', 'SUBAG'),
 
     )
     nama = models.CharField(max_length=100)
@@ -13,6 +14,7 @@ class Pemerintah(models.Model):
     jabatan = models.CharField(max_length=100)
     struktur_organisasi = models.CharField(max_length=30, choices=opsi, null=True)
     nip = models.CharField(max_length=20,null=True)
+    pendidikan = models.CharField(max_length=50,null=True)
     foto = models.ImageField(blank=True, null=True, upload_to="image/")
 
     def __str__(self):

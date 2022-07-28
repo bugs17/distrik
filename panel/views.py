@@ -6,8 +6,9 @@ from django.shortcuts import render, redirect
 from sejarah.models import Sejarah
 from geografis.models import Geografis
 from pemerintah.models import Pemerintah, Organisasi
+from administrasi.models import Administrasi
 
-from .forms import SejarahForm, GeografisForm, PemerintahForm, OrganisasiForm
+from .forms import SejarahForm, GeografisForm, PemerintahForm, OrganisasiForm, AdministrasiForm
 
 # index admin panel
 def index(request):
@@ -39,6 +40,7 @@ def update_sejarah(request, pk):
     sejarah_update = Sejarah.objects.get(id=pk)
     form = SejarahForm( request.POST or None, instance=sejarah_update)
     link_kembali = '/panel/sejarahdistrik/'
+
     
     if form.is_valid():
         form.save()
@@ -48,7 +50,7 @@ def update_sejarah(request, pk):
         'title':'Panel | Update Sejarah Distrik',
         'keterangan': 'Update Sejarah Distrik',
         'form': form,
-        'link_kembali': link_kembali
+        'link_kembali': link_kembali,
         
     }
 
@@ -170,20 +172,21 @@ def hapus_pemerintah(request, pk):
 
 # get struktur organisasi
 def organisasi(request):
-
+    camat = Pemerintah.objects.get(struktur_organisasi='camat')
     organisasi = Organisasi.objects.all()
 
     context = {
         'title' : 'Panel | Struktur Organisasi',
         'judul' : 'Struktur Organisasi Pemerintahan Distrik',
-        'organisasi': organisasi
+        'organisasi': organisasi,
+        'camat': camat,
         
     }
 
     return render(request, 'panel/organisasi.html', context)
 
-# update organisasi
 
+# update organisasi
 def update_organisasi(request, pk):
     organisasi_update = Organisasi.objects.get(id=pk)
     form = OrganisasiForm( request.POST or None, request.FILES or None, instance=organisasi_update)
@@ -202,3 +205,78 @@ def update_organisasi(request, pk):
     }
 
     return render(request, 'panel/update_organisasi.html', context)
+
+# get administrasi
+def administrasi(request):
+
+    administrasi = Administrasi.objects.all().order_by('-id')
+
+    context ={
+        'title':'Panel | Administrasi',
+        'administrasi': administrasi,
+        
+    }
+    return render(request, 'panel/administrasi.html',context)
+
+# add administrasi
+def add_administrasi(request):
+    tombol = "Tambah"
+    link_kembali = '/panel/administrasi/'
+    if request.method == 'POST':
+        form = AdministrasiForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            form = AdministrasiForm()
+            pesan = 'Data berhasil ditambahkan'
+            context ={
+                'title' : 'Panel | Tambah data administrasi',
+                'keterangan': 'Tambah Data',
+                'form': form,
+                'pesan': pesan,
+                'tombol': tombol,
+                'link_kembali': link_kembali,
+            }
+
+            return render(request, 'panel/add_administrasi.html', context)
+    else:
+
+        form = AdministrasiForm()
+
+        context = {
+            'title' : 'Panel | Tambah data administrasi',
+            'keterangan': 'Tambah Data',
+            'form': form,
+            'tombol': tombol,
+            'link_kembali': link_kembali,
+        }
+    return render(request, 'panel/add_administrasi.html', context)
+
+
+# edit administrasi administrasi
+def update_administrasi(request, pk):
+    administrasi_update = Administrasi.objects.get(id=pk)
+    form = AdministrasiForm( request.POST or None, request.FILES or None, instance=administrasi_update)
+    link_kembali = '/panel/administrasi/'
+    tombol = "Update"
+    
+    if form.is_valid():
+        form.save()
+        return redirect(link_kembali)
+    
+    context ={
+        'title':'Panel | Update Data Administrasi',
+        'keterangan': 'Update administrasi',
+        'form': form,
+        'tombol': tombol,
+        
+    }
+
+    return render(request, 'panel/add_administrasi.html', context)
+
+# hapus administrasi
+def hapus_administrasi(request, pk):
+    hapus_administrasi = Administrasi.objects.filter(id=pk)
+    hapus_administrasi.delete()
+    
+
+    return redirect('panel:administrasi')

@@ -1,0 +1,94 @@
+{% extends '../adminbase.html' %}
+{% load static %}
+
+{% block content %}
+<div >
+    <a href="{% url 'panel:addadministrasi' %}" class="btn btn-success my-2">Tambah data</a>
+    <div class="card container" style="height: 100%; padding: 30px;">
+                      
+                        <h3>
+                        Layanan dan persyaratan administrasi 
+                        </h3>
+                        <div class="row">
+                                <div class="col-md mb-4 mb-md-0">
+                                  <small class="text-light fw-semibold">List layanan administrasi (klik untuk melihat persyaratan)</small>
+                                  
+                                  {% for administrasi in administrasi %}
+                                  <div class="accordion mt-3">
+                                    <div class="card accordion-item">
+                                      <h3 class="accordion-header" id="headingTwo{{administrasi.id}}">
+                                        <button
+                                          type="button"
+                                          class="accordion-button collapsed"
+                                          data-bs-toggle="collapse"
+                                          data-bs-target="#accordionTwo{{administrasi.id}}"
+                                        >
+                                        {{administrasi.nama_layanan}}
+                                        </button>
+                                      </h3>
+                                      <div
+                                        id="accordionTwo{{administrasi.id}}"
+                                        class="accordion-collapse collapse"
+                                        
+                                      >
+                                        <div class="accordion-body">
+                                          <p>Persyaratan {{administrasi.nama_layanan | safe}}</p>
+                                          {{administrasi.persyaratan | safe}}
+                                          <div>
+                                          <a href="{% url 'panel:updateadministrasi' administrasi.id %}" class="btn btn-success tombolupdate">Edit</a>
+                                          <a 
+                                          class="btn btn-danger tombolupdate"
+                                          style="color: white;"
+                                          data-bs-toggle="modal" 
+                                          data-bs-target="#hapus-{{ administrasi.id }}"
+                                          
+                                          >Hapus</a>
+
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="modal fade" id="hapus-{{ administrasi.id }}" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <button
+                                                type="button"
+                                                class="btn-close"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Close"
+                                              ></button>
+                                            </div>
+                                            <div class="modal-body">
+                                              <div class="row">
+                                                <div class="col mb-3">
+                                                   <center><h5>Hapus <strong>{{ administrasi.nama_layanan }}?</strong></h5></center>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <a href="{% url 'panel:hapusadministrasi' administrasi.id %}" class="btn btn-danger">Hapus</a>
+                                              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                                Batal
+                                              </button>
+                                              
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                  </div>
+                                  {% endfor %}
+
+                                </div>
+                        </div>
+        
+    </div>
+</div>
+{% endblock content %}
+    
+    
+
+
+
+
+
