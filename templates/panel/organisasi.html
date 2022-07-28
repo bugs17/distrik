@@ -1,0 +1,75 @@
+{% extends '../adminbase.html' %}
+{% load static %}
+
+{% block content %}
+
+<div>
+    
+    {% for organisasi in organisasi %}
+
+    <div class="card accordion-item active">
+        <h2 class="accordion-header" id="headingOne">
+          <div
+            class="accordion-button"
+            aria-expanded="true"
+            aria-controls="accordionOne"
+          >
+          <h3>{{ organisasi.judul }}</h3>
+          </div>
+        </h2>
+    
+        <div
+          id="accordionOne"
+          class="accordion-collapse collapse show"
+          data-bs-parent="#accordionExample"
+        >
+          <div class="accordion-body">
+            <center><img class="organisasi-img" src="{{ organisasi.gambar.url }}" alt="Gambar Struktur Organisasi"></center>
+            <div>
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Nama</th>
+                          <th>Jabatan</th>
+                          <th>Pangkat</th>
+                          <th>Nip</th>
+                          <th>Foto</th>
+                          <th>Pendidikan</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                             <strong>Rionaldi</strong>
+                          </td>
+                          <td>Kepala Distrik</td>
+                          <td><span>3A</span></td>
+                          <td><span>090909090909</span></td>
+                          <td>
+                            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                              <li
+                                data-bs-toggle="tooltip"
+                                data-popup="tooltip-custom"
+                                data-bs-placement="top"
+                                class="avatar avatar-xs pull-up"
+                                title="Lilian Fuller"
+                              >
+                                <img src="{% static 'img/about.jpg' %}" alt="foto profil" class="rounded-circle" />
+                              </li>
+                            </ul>
+                          </td>
+                          <td><span>Sarjana Ekonomi</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <a href="{% url 'panel:updateorganisasi' organisasi.id %}" class="btn btn-success tombolupdate">Update</a>
+    {% endfor %}
+</div>
+
+{% endblock content %}

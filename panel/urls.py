@@ -12,5 +12,8 @@ urlpatterns = [
     path('updategeografis/<str:pk>',views.update_geografis, name='updategeografis'),
     path('pemerintahdistrik/',views.pemerintah, name='pemerintah'),
     path('addpemerintah/',views.add_pemerintah, name='addpemerintah'),
+    path('updatepemerintah/<str:pk>',views.update_pemerintah, name='updatepemerintah'),
     path('hapuspemerintah/<str:pk>',views.hapus_pemerintah, name='hapuspemerintah'),
+    path('organisasi/',views.organisasi, name='organisasi'),
+    path('organisasi/<str:pk>',views.update_organisasi, name='updateorganisasi'),
 ]

@@ -5,9 +5,9 @@ from django.shortcuts import render, redirect
 # import model
 from sejarah.models import Sejarah
 from geografis.models import Geografis
-from pemerintah.models import Pemerintah
+from pemerintah.models import Pemerintah, Organisasi
 
-from .forms import SejarahForm, GeografisForm, PemerintahForm
+from .forms import SejarahForm, GeografisForm, PemerintahForm, OrganisasiForm
 
 # index admin panel
 def index(request):
@@ -107,6 +107,7 @@ def pemerintah(request):
 
 # tambah data pemerintah
 def add_pemerintah(request):
+    tombol = "Tambah"
     if request.method == 'POST':
         form = PemerintahForm(request.POST, request.FILES)
         if form.is_valid():
@@ -118,6 +119,7 @@ def add_pemerintah(request):
                 'keterangan': 'Tambah Data',
                 'form': form,
                 'pesan': pesan,
+                'tombol': tombol,
             }
 
             return render(request, 'panel/add_pemerintah.html', context)
@@ -129,7 +131,31 @@ def add_pemerintah(request):
             'title' : 'Panel | Tambah data',
             'keterangan': 'Tambah Data',
             'form': form,
+            'tombol': tombol,
         }
+    return render(request, 'panel/add_pemerintah.html', context)
+
+
+# update data pemerintah
+def update_pemerintah(request, pk):
+    pemerintah_update = Pemerintah.objects.get(id=pk)
+    form = PemerintahForm( request.POST or None, request.FILES or None, instance=pemerintah_update)
+    link_kembali = '/panel/pemerintahdistrik/'
+    tombol = "Update"
+    
+    if form.is_valid():
+        form.save()
+        return redirect(link_kembali)
+    
+    context ={
+        'title':'Panel | Update Data Pemerintah',
+        'keterangan': 'Update Pemerintah Distrik',
+        'form': form,
+        'link_kembali': link_kembali,
+        'tombol': tombol,
+        
+    }
+
     return render(request, 'panel/add_pemerintah.html', context)
 
 
@@ -140,3 +166,39 @@ def hapus_pemerintah(request, pk):
     
 
     return redirect('panel:pemerintah')
+
+
+# get struktur organisasi
+def organisasi(request):
+
+    organisasi = Organisasi.objects.all()
+
+    context = {
+        'title' : 'Panel | Struktur Organisasi',
+        'judul' : 'Struktur Organisasi Pemerintahan Distrik',
+        'organisasi': organisasi
+        
+    }
+
+    return render(request, 'panel/organisasi.html', context)
+
+# update organisasi
+
+def update_organisasi(request, pk):
+    organisasi_update = Organisasi.objects.get(id=pk)
+    form = OrganisasiForm( request.POST or None, request.FILES or None, instance=organisasi_update)
+    link_kembali = '/panel/organisasi/'
+    
+    
+    if form.is_valid():
+        form.save()
+        return redirect(link_kembali)
+    
+    context ={
+        'title':'Panel | Update Data Pemerintah',
+        'keterangan': 'Update Struktur Organisasi',
+        'form': form,
+        
+    }
+
+    return render(request, 'panel/update_organisasi.html', context)
