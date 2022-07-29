@@ -1,3 +1,4 @@
+from cProfile import label
 from dataclasses import fields
 from django import forms
 from django.forms import ModelForm
@@ -7,6 +8,7 @@ from sejarah.models import Sejarah
 from geografis.models import Geografis
 from pemerintah.models import Pemerintah, Organisasi
 from administrasi.models import Administrasi
+from berita.models import Berita
 
 
 # create form untuk update sejarah distrik
@@ -70,4 +72,21 @@ class AdministrasiForm(ModelForm):
         widgets = {
             'nama_layanan': forms.TextInput(attrs={'class': 'form-control', 'id': 'basic-default-name', 'placeholder': 'Masukan nama layanan..'}),
             'persyaratan': forms.Textarea(attrs={'class': 'form-control', 'aria-label': 'Isikan pesyaratan-persyaratan administrasi..', 'aria-describedby': 'basic-icon-default-message2'}),
+        }
+
+# form add berita
+class BeritaForm(ModelForm):
+    class Meta:
+        model = Berita
+        fields = ('judul', 'body', 'category', 'gambar')
+
+        labels = {
+            'body' : 'Isi berita',
+            'category' : 'Kategori',
+        }
+
+        widgets = {
+            'judul': forms.TextInput(attrs={'class': 'form-control', 'id': 'basic-default-name', 'placeholder': 'Isikan judul berita..'}),
+            'body': forms.Textarea(attrs={'class': 'form-control', 'aria-label': 'Isi berita', 'aria-describedby': 'basic-icon-default-message2'}),
+            'category': forms.TextInput(attrs={'class': 'form-control', 'id': 'basic-default-name', 'placeholder': 'Isikan kategori berita..'}),
         }

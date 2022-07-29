@@ -7,8 +7,9 @@ from sejarah.models import Sejarah
 from geografis.models import Geografis
 from pemerintah.models import Pemerintah, Organisasi
 from administrasi.models import Administrasi
+from berita.models import Berita
 
-from .forms import SejarahForm, GeografisForm, PemerintahForm, OrganisasiForm, AdministrasiForm
+from .forms import SejarahForm, GeografisForm, PemerintahForm, OrganisasiForm, AdministrasiForm, BeritaForm
 
 # index admin panel
 def index(request):
@@ -16,7 +17,7 @@ def index(request):
     pemerintah = Pemerintah.objects.all()
 
     context = {
-        'title': 'Admin Panel',
+        'title': 'Admin Panel Distrik Ninati',
         'pemerintah': pemerintah,
     }
 
@@ -96,7 +97,7 @@ def update_geografis(request, pk):
 # get geografis
 def pemerintah(request):
 
-    pemerintah = Pemerintah.objects.all()
+    pemerintah = Pemerintah.objects.all().order_by('-id')
 
     context = {
         'title' : 'Panel | Pemerintah Distrik',
@@ -280,3 +281,66 @@ def hapus_administrasi(request, pk):
     
 
     return redirect('panel:administrasi')
+
+
+# get berita
+def berita(request):
+    berita = Berita.objects.all().order_by('-update')
+    context = {
+        'title' : 'Panel | List Berita',
+        'judul' : 'List berita',
+        'berita': berita,
+    }
+    return render(request, 'panel/berita.html', context)
+
+
+# add berita
+def add_berita(request):
+    tombol = "Tambah"
+    if request.method == 'POST':
+        form = BeritaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            form = BeritaForm()
+            pesan = 'Berita berhasil ditambahkan'
+            context ={
+                'title' : 'Panel | Tambah berita',
+                'keterangan': 'Tambah Berita',
+                'form': form,
+                'pesan': pesan,
+                'tombol': tombol,
+            }
+
+            return render(request, 'panel/add_berita.html', context)
+    else:
+
+        form = BeritaForm()
+
+        context = {
+            'title' : 'Panel | Tambah Berita',
+            'keterangan': 'Tambah Berita',
+            'form': form,
+            'tombol': tombol,
+        }
+    return render(request, 'panel/add_berita.html', context)
+
+
+# update berita
+def update_berita(request, slugInput):
+    berita_update = Berita.objects.get(slug=slugInput)
+    form = BeritaForm( request.POST or None, request.FILES or None, instance=berita_update)
+    link_kembali = '/panel/berita/'
+    
+    
+    if form.is_valid():
+        form.save()
+        return redirect(link_kembali)
+    
+    context ={
+        'title':'Panel | Update berita',
+        'keterangan': 'Update data berita',
+        'form': form,
+        
+    }
+
+    return render(request, 'panel/update_berita.html', context)

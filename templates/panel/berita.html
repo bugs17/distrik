@@ -1,0 +1,72 @@
+{% extends '../adminbase.html' %}
+{% load static %}
+
+{% block content %}
+
+<div>
+
+  <a href="{% url 'panel:addberita' %}" class="btn btn-success my-2">Tambah berita</a>
+  <div class="card">
+        <h5 class="card-header">{{ judul }}</h5>
+        <div class="card-body">
+            <div class="table-responsive text-nowrap">
+                <!-- tabel -->
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Judul</th>
+                      <th>Isi Berita</th>
+                      <th>Kategori</th>
+                      <th>Waktu</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                    {% if berita %}
+                      {% for berita in berita %}
+                      <tr>
+                        <td>
+                          <a href="/" target="_blank" style="color: #697a8d;"><strong>{{berita.judul|truncatewords_html:3}}</strong></a>
+                        </td>
+                        <td>{{berita.body|safe|truncatewords_html:4}}</td>
+                        <td>{{berita.category}}</td>
+                        <td>{{berita.update}}</td>
+                        <td>
+                          <a href="{% url 'panel:updateberita' berita.slug %}" class="btn btn-success my-2">Edit</a>
+                          <a href="#" class="btn btn-danger my-2">Hapus</a>
+                        </td>
+                      </tr>
+                      {% endfor %}
+
+                    {% else %}
+                    <tr>
+                      <td>
+                        <a href="/" target="_blank" style="color: #697a8d;">---------</a>
+                      </td>
+                      <td>---------</td>
+                      <td>---------</td>
+                      <td>---------</td>
+                      <td>
+                        ---------
+                      </td>
+                    </tr>
+
+                    {% endif %}
+                      
+                    
+                      
+                  </tbody>
+                </table>
+                <!-- /tabel -->
+              </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+
+
+
+

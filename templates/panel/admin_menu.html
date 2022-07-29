@@ -9,6 +9,7 @@
 {% url 'panel:organisasi' as organisasi %}
 {% url 'panel:administrasi' as administrasi %}
 {% url 'panel:addadministrasi' as addadministrasi %}
+{% url 'panel:berita' as berita %}
 
 
 
@@ -96,8 +97,8 @@
           </ul>
         </li>
 
-        <li class="menu-item">
-          <a href="#" class="menu-link">
+        <li class="menu-item {% if request.path == berita %} active {% endif %}">
+          <a href="{% url 'panel:berita' %}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-collection"></i>
             <div data-i18n="Basic">Berita</div>
           </a>

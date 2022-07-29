@@ -20,4 +20,7 @@ urlpatterns = [
     path('addadministrasi/',views.add_administrasi, name='addadministrasi'),
     path('updateadministrasi/<str:pk>',views.update_administrasi, name='updateadministrasi'),
     path('hapusdministrasi/<str:pk>',views.hapus_administrasi, name='hapusadministrasi'),
+    path('berita/',views.berita, name='berita'),
+    path('addberita/',views.add_berita, name='addberita'),
+    path('updateberita/<str:slugInput>',views.update_berita, name='updateberita'),
 ]
