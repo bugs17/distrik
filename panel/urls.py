@@ -22,5 +22,6 @@ urlpatterns = [
     path('hapusdministrasi/<str:pk>',views.hapus_administrasi, name='hapusadministrasi'),
     path('berita/',views.berita, name='berita'),
     path('addberita/',views.add_berita, name='addberita'),
-    path('updateberita/<str:slugInput>',views.update_berita, name='updateberita'),
+    path('updateberita/<str:pk>',views.update_berita, name='updateberita'),
+    path('hapusberita/<str:pk>',views.hapus_berita, name='hapusberita'),
 ]

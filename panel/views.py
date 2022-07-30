@@ -326,8 +326,8 @@ def add_berita(request):
 
 
 # update berita
-def update_berita(request, slugInput):
-    berita_update = Berita.objects.get(slug=slugInput)
+def update_berita(request, pk):
+    berita_update = Berita.objects.get(id=pk)
     form = BeritaForm( request.POST or None, request.FILES or None, instance=berita_update)
     link_kembali = '/panel/berita/'
     
@@ -344,3 +344,12 @@ def update_berita(request, slugInput):
     }
 
     return render(request, 'panel/update_berita.html', context)
+
+
+# hapus berita
+def hapus_berita(request, pk):
+    hapus_berita = Berita.objects.filter(id=pk)
+    hapus_berita.delete()
+    
+
+    return redirect('panel:berita')

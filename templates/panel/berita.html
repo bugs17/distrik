@@ -33,10 +33,43 @@
                         <td>{{berita.category}}</td>
                         <td>{{berita.update}}</td>
                         <td>
-                          <a href="{% url 'panel:updateberita' berita.slug %}" class="btn btn-success my-2">Edit</a>
-                          <a href="#" class="btn btn-danger my-2">Hapus</a>
+                          <a href="{% url 'panel:updateberita' berita.id %}" class="btn btn-success my-2">Edit</a>
+                          <a 
+                            class="btn btn-danger"
+                            style="color: white;"
+                            data-bs-toggle="modal" 
+                            data-bs-target="#hapus-{{ berita.id }}"              
+                          >Hapus</a>
                         </td>
                       </tr>
+                      <div class="modal fade" id="hapus-{{ berita.id }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col mb-3">
+                                   <center><h5>Hapus <strong>{{ berita.judul }}?</strong></h5></center>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <a href="{% url 'panel:hapusberita' berita.id %}" class="btn btn-danger">Hapus</a>
+                              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                Batal
+                              </button>
+                              
+                            </div>
+                          </div>
+                        </div>
+                    </div>
                       {% endfor %}
 
                     {% else %}

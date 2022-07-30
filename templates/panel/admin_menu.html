@@ -97,7 +97,7 @@
           </ul>
         </li>
 
-        <li class="menu-item {% if request.path == berita %} active {% endif %}">
+        <li class="menu-item {% if request.path == berita %} active {% elif request.path == '/panel/addberita/' %} active {% endif %}">
           <a href="{% url 'panel:berita' %}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-collection"></i>
             <div data-i18n="Basic">Berita</div>
