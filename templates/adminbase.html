@@ -100,7 +100,7 @@
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
                 <li class="nav-item lh-1 me-3">
-                  Admin
+                  <strong >{{request.user|upper}}</strong> 
                 </li>
 
                 <!-- User -->
@@ -120,7 +120,7 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">User name</span>
+                            <span class="fw-semibold d-block">{{request.user|upper}}</span>
                             <small class="text-muted">Admin</small>
                           </div>
                         </div>
@@ -140,7 +140,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a class="dropdown-item" href="{% url 'panel:logout' %}">
                         <i class="menu-icon tf-icons bx bx-log-out"></i>
                         <span class="align-middle">Keluar</span>
                       </a>

@@ -1,4 +1,5 @@
 from cProfile import label
+from codecs import namereplace_errors
 from dataclasses import fields
 from django import forms
 from django.forms import ModelForm
@@ -9,6 +10,8 @@ from geografis.models import Geografis
 from pemerintah.models import Pemerintah, Organisasi
 from administrasi.models import Administrasi
 from berita.models import Berita
+from statistik.models import DataPerKampung
+from galery.models import Galery
 
 
 # create form untuk update sejarah distrik
@@ -90,3 +93,46 @@ class BeritaForm(ModelForm):
             'body': forms.Textarea(attrs={'class': 'form-control', 'aria-label': 'Isi berita', 'aria-describedby': 'basic-icon-default-message2'}),
             'category': forms.TextInput(attrs={'class': 'form-control', 'id': 'basic-default-name', 'placeholder': 'Isikan kategori berita..'}),
         }
+
+
+
+# form add data kampung
+class DataForm(ModelForm):
+    class Meta:
+        model = DataPerKampung
+        fields = ('nama_kampung','jumlah_jiwa', 'kk', 'puskesmas', 'sekolah',)
+
+        labels = {
+            'nama_kampung' : 'Nama Kampung',
+            'jumlah_jiwa': 'Jumlah Penduduk',
+            'kk': 'Jumlah kepala Keluarga',
+            'puskesmas':'Jumlah Puskesamas',
+            'sekolah':'Jumlah Sekolah'
+        }
+
+        widgets = {
+            'jumlah_jiwa': forms.NumberInput(attrs={'class': 'form-control', 'id': 'basic-default-name', 'placeholder': 'Jumlah Penduduk'}),
+            'nama_kampung': forms.TextInput(attrs={'class': 'form-control', 'id': 'basic-default-name', 'placeholder': 'Masukan nama kampung'}),
+            'kk': forms.NumberInput(attrs={'class': 'form-control', 'id': 'basic-default-name', 'placeholder': 'Jumlah KK'}),
+            'puskesmas': forms.NumberInput(attrs={'class': 'form-control', 'id': 'basic-default-name', 'placeholder': 'Jumlah puskesmas'}),
+            'sekolah': forms.NumberInput(attrs={'class': 'form-control', 'id': 'basic-default-name', 'placeholder': 'Jumlah sekolah'}),
+            }
+
+
+    
+# form tambah galery
+class GaleryForm(ModelForm):
+    class Meta:
+        model = Galery
+        fields = ('deskripsi', 'file',)
+
+        labels = {
+            'deskripsi' : 'Deskripsi',
+            'file': 'Foto'
+        }
+
+        widgets = {
+            'deskripsi': forms.TextInput(attrs={'class': 'form-control', 'id': 'basic-default-name', 'placeholder': 'Masukan Deskripsi gambar..'}),
+
+        }
+        

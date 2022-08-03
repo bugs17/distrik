@@ -5,6 +5,9 @@ from . import views
 
 app_name = 'panel'
 urlpatterns = [
+    
+    path('loginpanel/',views.login_panel, name='login'),
+    path('logoutpanel/',views.logout_panel, name='logout'),
     path('',views.index, name='index'),
     path('sejarahdistrik/',views.sejarah, name='getsejarah'),
     path('updatesejarah/<str:pk>',views.update_sejarah, name='updatesejarah'),
@@ -24,4 +27,13 @@ urlpatterns = [
     path('addberita/',views.add_berita, name='addberita'),
     path('updateberita/<str:pk>',views.update_berita, name='updateberita'),
     path('hapusberita/<str:pk>',views.hapus_berita, name='hapusberita'),
+    path('data/',views.data, name='data'),
+    path('adddata/',views.add_data, name='adddata'),
+    path('updatedata/<str:pk>',views.update_data, name='updatedata'),
+    path('hapusdata/<str:pk>',views.hapus_data, name='hapusdata'),
+    path('galery/',views.galery, name='galery'),
+    path('addgalery/',views.add_galery, name='addgalery'),
+    path('updategalery/<str:pk>',views.update_galery, name='updategalery'),
+    path('hapusgalery/<str:pk>',views.hapus_galery, name='hapusgalery'),
+    
 ]

@@ -10,6 +10,11 @@
 {% url 'panel:administrasi' as administrasi %}
 {% url 'panel:addadministrasi' as addadministrasi %}
 {% url 'panel:berita' as berita %}
+{% url 'panel:data' as data %}
+{% url 'panel:adddata' as adddata %}
+{% url 'panel:galery' as galery %}
+{% url 'panel:addgalery' as addgalery %}
+
 
 
 
@@ -104,14 +109,23 @@
           </a>
         </li>
         
-        <li class="menu-item">
-          <a href="#" class="menu-link">
+        <li class="menu-item {% if request.path == data %} active {% elif request.path == adddata %} active {% endif %}">
+          <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-data"></i>
-            <div data-i18n="Basic">Data</div>
+            <div data-i18n="Misc">Data</div>
           </a>
+          <ul class="menu-sub">
+            <li class="menu-item {% if request.path == data %} active {% elif request.path == adddata %} active {% endif %}">
+              <a href="{% url 'panel:data' %}" class="menu-link">
+                <div data-i18n="Error">Data Kampung</div>
+              </a>
+            </li>
+            
+          </ul>
         </li>
-        <li class="menu-item">
-          <a href="#" class="menu-link">
+
+        <li class="menu-item {% if request.path == galery %} active {% elif request.path == addgalery %} active {% endif %}">
+          <a href="{% url 'panel:galery' %}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-images"></i>
             <div data-i18n="Basic">Galery</div>
           </a>
@@ -119,6 +133,7 @@
       </li>
       
       
+      {% if user.is_authenticated %}
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Admin</span></li>
       
       <li class="menu-item">
@@ -127,9 +142,13 @@
           <div data-i18n="Basic">User</div>
         </a>
       </li>
+        
+      {% endif %}
+        
+     
 
       <li class="menu-item">
-        <a href="#" class="menu-link">
+        <a href="{% url 'panel:logout' %}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-log-out"></i>
           <div data-i18n="Basic">Keluar</div>
         </a>

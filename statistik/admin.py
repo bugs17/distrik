@@ -1,8 +1,6 @@
 from django.contrib import admin
-from .models import KampungData, Populasi, KepalaKeluarga
+from .models import DataPerKampung
 
 
 
-admin.site.register(KampungData)
-admin.site.register(Populasi)
-admin.site.register(KepalaKeluarga)
+admin.site.register(DataPerKampung)

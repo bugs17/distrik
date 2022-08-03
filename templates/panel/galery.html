@@ -5,7 +5,13 @@
 
 <div>
 
-  <a href="{% url 'panel:addberita' %}" class="btn btn-success my-2">Tambah berita</a>
+  <a href="{% url 'panel:addgalery' %}" class="btn btn-success my-2">Upload</a>
+  {% if hapus %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+              {{ hapus }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+  {% endif %}
   <div class="card">
         <h5 class="card-header">{{ judul }}</h5>
         <div class="card-body">
@@ -14,35 +20,34 @@
                 <table class="table table-bordered">
                   <thead>
                     <tr>
-                      <th>Judul</th>
-                      <th>Isi Berita</th>
-                      <th>Kategori</th>
-                      <th>Waktu</th>
-                      <th>Actions</th>
+                      <th>Foto</th>
+                      <th>Deskripsi</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     
-                    {% if berita %}
-                      {% for berita in berita %}
+                    {% if galery %}
+                      
+                      
+                      {% for galery in galery %}
+                        
                       <tr>
                         <td>
-                          <a href="/" target="_blank" style="color: #697a8d;"><strong>{{berita.judul|truncatewords_html:3}}</strong></a>
+                          <img src="{{galery.file.url}}" width="90px" >
                         </td>
-                        <td>{{berita.body|safe|truncatewords_html:4}}</td>
-                        <td>{{berita.category}}</td>
-                        <td>{{berita.update|date:"d/m/Y"}}</td>
+                        <td><strong>{{galery.deskripsi|truncatewords_html:4}}</strong></td>
                         <td>
-                          <a href="{% url 'panel:updateberita' berita.id %}" class="btn btn-success my-2">Edit</a>
+                          <a href="{% url 'panel:updategalery' galery.id %}" class="btn btn-success my-2">Edit</a>
                           <a 
                             class="btn btn-danger"
                             style="color: white;"
                             data-bs-toggle="modal" 
-                            data-bs-target="#hapus-{{ berita.id }}"              
+                            data-bs-target="#hapus-{{ galery.id }}"              
                           >Hapus</a>
                         </td>
                       </tr>
-                      <div class="modal fade" id="hapus-{{ berita.id }}" tabindex="-1" aria-hidden="true">
+                      <div class="modal fade" id="hapus-{{ galery.id }}" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -56,12 +61,12 @@
                             <div class="modal-body">
                               <div class="row">
                                 <div class="col mb-3">
-                                   <center><h5>Hapus <strong>{{ berita.judul }}?</strong></h5></center>
+                                   <center><h5>Anda yakin hapus foto ini ?</h5></center>
                                 </div>
                               </div>
                             </div>
                             <div class="modal-footer">
-                              <a href="{% url 'panel:hapusberita' berita.id %}" class="btn btn-danger">Hapus</a>
+                              <a href="{% url 'panel:hapusgalery' galery.id %}" class="btn btn-danger">Hapus</a>
                               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                 Batal
                               </button>
@@ -70,14 +75,10 @@
                           </div>
                         </div>
                     </div>
-                      {% endfor %}
+                    {% endfor %}
 
                     {% else %}
                     <tr>
-                      <td>
-                        <a href="/" target="_blank" style="color: #697a8d;">---------</a>
-                      </td>
-                      <td>---------</td>
                       <td>---------</td>
                       <td>---------</td>
                       <td>

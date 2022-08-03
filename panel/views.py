@@ -1,6 +1,7 @@
-
-from multiprocessing import context
+from django.contrib import messages
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 # import model
 from sejarah.models import Sejarah
@@ -8,10 +9,16 @@ from geografis.models import Geografis
 from pemerintah.models import Pemerintah, Organisasi
 from administrasi.models import Administrasi
 from berita.models import Berita
+from galery.models import Galery
 
-from .forms import SejarahForm, GeografisForm, PemerintahForm, OrganisasiForm, AdministrasiForm, BeritaForm
+# import model statistik
+from statistik.models import DataPerKampung
+
+from .forms import SejarahForm, GeografisForm, PemerintahForm, OrganisasiForm, AdministrasiForm, BeritaForm, DataForm, GaleryForm
+
 
 # index admin panel
+@login_required(login_url='panel:login')
 def index(request):
 
     pemerintah = Pemerintah.objects.all()
@@ -25,6 +32,7 @@ def index(request):
 
 
 # get sejarah
+@login_required(login_url='panel:login')
 def sejarah(request):
 
     sejarah = Sejarah.objects.all()
@@ -37,6 +45,7 @@ def sejarah(request):
     return render(request, 'panel/sejarahdistrik.html', context)
 
 # update sejarah
+@login_required(login_url='panel:login')
 def update_sejarah(request, pk):
     sejarah_update = Sejarah.objects.get(id=pk)
     form = SejarahForm( request.POST or None, instance=sejarah_update)
@@ -59,6 +68,7 @@ def update_sejarah(request, pk):
 
 
 # get geografis
+@login_required(login_url='panel:login')
 def geografis(request):
 
     geografis = Geografis.objects.all()
@@ -74,6 +84,7 @@ def geografis(request):
 
 
 # update geografis
+@login_required(login_url='panel:login')
 def update_geografis(request, pk):
     geografis_update = Geografis.objects.get(id=pk)
     form = GeografisForm( request.POST or None, instance=geografis_update)
@@ -95,6 +106,7 @@ def update_geografis(request, pk):
 
 
 # get geografis
+@login_required(login_url='panel:login')
 def pemerintah(request):
 
     pemerintah = Pemerintah.objects.all().order_by('-id')
@@ -108,7 +120,9 @@ def pemerintah(request):
     }
     return render(request, 'panel/pemerintah.html', context)
 
+
 # tambah data pemerintah
+@login_required(login_url='panel:login')
 def add_pemerintah(request):
     tombol = "Tambah"
     if request.method == 'POST':
@@ -140,6 +154,7 @@ def add_pemerintah(request):
 
 
 # update data pemerintah
+@login_required(login_url='panel:login')
 def update_pemerintah(request, pk):
     pemerintah_update = Pemerintah.objects.get(id=pk)
     form = PemerintahForm( request.POST or None, request.FILES or None, instance=pemerintah_update)
@@ -163,6 +178,7 @@ def update_pemerintah(request, pk):
 
 
 # hapus data pemerintah
+@login_required(login_url='panel:login')
 def hapus_pemerintah(request, pk):
     hapus_pemerintah = Pemerintah.objects.filter(id=pk)
     hapus_pemerintah.delete()
@@ -172,6 +188,7 @@ def hapus_pemerintah(request, pk):
 
 
 # get struktur organisasi
+@login_required(login_url='panel:login')
 def organisasi(request):
     camat = Pemerintah.objects.get(struktur_organisasi='camat')
     organisasi = Organisasi.objects.all()
@@ -188,6 +205,7 @@ def organisasi(request):
 
 
 # update organisasi
+@login_required(login_url='panel:login')
 def update_organisasi(request, pk):
     organisasi_update = Organisasi.objects.get(id=pk)
     form = OrganisasiForm( request.POST or None, request.FILES or None, instance=organisasi_update)
@@ -208,6 +226,7 @@ def update_organisasi(request, pk):
     return render(request, 'panel/update_organisasi.html', context)
 
 # get administrasi
+@login_required(login_url='panel:login')
 def administrasi(request):
 
     administrasi = Administrasi.objects.all().order_by('-id')
@@ -220,6 +239,7 @@ def administrasi(request):
     return render(request, 'panel/administrasi.html',context)
 
 # add administrasi
+@login_required(login_url='panel:login')
 def add_administrasi(request):
     tombol = "Tambah"
     link_kembali = '/panel/administrasi/'
@@ -254,6 +274,7 @@ def add_administrasi(request):
 
 
 # edit administrasi administrasi
+@login_required(login_url='panel:login')
 def update_administrasi(request, pk):
     administrasi_update = Administrasi.objects.get(id=pk)
     form = AdministrasiForm( request.POST or None, request.FILES or None, instance=administrasi_update)
@@ -274,7 +295,9 @@ def update_administrasi(request, pk):
 
     return render(request, 'panel/add_administrasi.html', context)
 
+
 # hapus administrasi
+@login_required(login_url='panel:login')
 def hapus_administrasi(request, pk):
     hapus_administrasi = Administrasi.objects.filter(id=pk)
     hapus_administrasi.delete()
@@ -284,6 +307,7 @@ def hapus_administrasi(request, pk):
 
 
 # get berita
+@login_required(login_url='panel:login')
 def berita(request):
     berita = Berita.objects.all().order_by('-update')
     context = {
@@ -295,6 +319,7 @@ def berita(request):
 
 
 # add berita
+@login_required(login_url='panel:login')
 def add_berita(request):
     tombol = "Tambah"
     if request.method == 'POST':
@@ -325,7 +350,9 @@ def add_berita(request):
     return render(request, 'panel/add_berita.html', context)
 
 
+
 # update berita
+@login_required(login_url='panel:login')
 def update_berita(request, pk):
     berita_update = Berita.objects.get(id=pk)
     form = BeritaForm( request.POST or None, request.FILES or None, instance=berita_update)
@@ -347,9 +374,215 @@ def update_berita(request, pk):
 
 
 # hapus berita
+@login_required(login_url='panel:login')
 def hapus_berita(request, pk):
     hapus_berita = Berita.objects.filter(id=pk)
     hapus_berita.delete()
     
 
     return redirect('panel:berita')
+
+
+
+# get data
+@login_required(login_url='panel:login')
+def data(request):
+
+    datakampung = DataPerKampung.objects.all()
+
+
+    context = {
+        'title':'Panel | Data kampung',
+        'judul': 'List kampung dan data',
+        'data':datakampung,
+
+    }
+    return render(request, 'panel/data.html', context)
+
+
+
+# add data
+@login_required(login_url='panel:login')
+def add_data(request):
+    tombol = "Tambah"
+    if request.method == 'POST':
+        kampung = request.POST['nama_kampung'].lower()
+        form = DataForm(request.POST, request.FILES)
+        
+        if DataPerKampung.objects.filter(nama_kampung=kampung):
+            messages.error(request, 'Nama kampung sudah ada !')
+            form = DataForm()
+            context ={
+                'title' : 'Panel | Tambah data kampung',
+                'keterangan': 'Tambah data kampung',
+                'form': form,
+                'tombol': tombol,
+            }
+            return render(request, 'panel/add_data.html', context)
+
+        elif form.is_valid():
+            form.save()
+            form = DataForm()
+            pesan = 'Data berhasil ditambahkan'
+            context ={
+                'title' : 'Panel | Tambah data kampung',
+                'keterangan': 'Tambah data kampung',
+                'form': form,
+                'pesan': pesan,
+                'tombol': tombol,
+            }
+
+            return render(request, 'panel/add_data.html', context)
+    else:
+
+        form = DataForm()
+
+        context = {
+            'title' : 'Panel | Tambah data kampung',
+            'keterangan': 'Tambah data kampung',
+            'form': form,
+            'tombol': tombol,
+        }
+    return render(request, 'panel/add_data.html', context)
+
+
+
+# update data
+@login_required(login_url='panel:login')
+def update_data(request, pk):
+    tombol = "Simpan"
+    data_update = DataPerKampung.objects.get(id=pk)
+    form = DataForm( request.POST or None, request.FILES or None, instance=data_update)
+    link_kembali = '/panel/data/'
+    
+    if form.is_valid():
+        
+        form.save()
+        return redirect(link_kembali)
+    
+    context ={
+        'title':'Panel | Update Data Kampung',
+        'keterangan': 'Update data kampung',
+        'form': form,
+        'tombol': tombol,
+        
+    }
+
+    return render(request, 'panel/update_data.html', context)
+
+
+
+# hapus data
+@login_required(login_url='panel:login')
+def hapus_data(request, pk):
+    hapus_data = DataPerKampung.objects.filter(id=pk)
+    hapus_data.delete()
+
+    return redirect('panel:data')
+
+
+# get galery
+@login_required(login_url='panel:login')
+def galery(request):
+    galery = Galery.objects.all().order_by('-id')
+    context = {
+        'title':'Panel | Galery',
+        'judul': 'List Galery',
+        'galery':galery,
+    }
+
+    return render(request, 'panel/galery.html', context)
+
+
+
+# add data galery
+@login_required(login_url='panel:login')
+def add_galery(request):
+    tombol = "Tambah"
+    if request.method == 'POST':
+        form = GaleryForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            form = GaleryForm()
+            pesan = 'Foto berhasil ditambahkan'
+            context ={
+                'title' : 'Panel | Tambah Galery',
+                'keterangan': 'Tambah Galery',
+                'form': form,
+                'pesan': pesan,
+                'tombol': tombol,
+            }
+
+            return render(request, 'panel/add_galery.html', context)
+    else:
+
+        form = GaleryForm()
+
+        context = {
+            'title' : 'Panel | Tambah Galery',
+            'keterangan': 'Tambah Galery',
+            'form': form,
+            'tombol': tombol,
+        }
+    return render(request, 'panel/add_galery.html', context)
+
+
+
+# update galery
+@login_required(login_url='panel:login')
+def update_galery(request, pk):
+    tombol = "Simpan"
+    galery_update = Galery.objects.get(id=pk)
+    form = GaleryForm( request.POST or None, request.FILES or None, instance=galery_update)
+    link_kembali = '/panel/galery/'
+    
+    if form.is_valid():
+        form.save()
+        return redirect(link_kembali)
+    
+    context ={
+        'title':'Panel | Update Galery',
+        'keterangan': 'Update data Galery',
+        'form': form,
+        'tombol': tombol,
+        
+    }
+
+    return render(request, 'panel/update_galery.html', context)
+
+
+
+# hapus galery
+@login_required(login_url='panel:login')
+def hapus_galery(request, pk):
+    hapus_galery = Galery.objects.filter(id=pk)
+    hapus_galery.delete()
+
+    return redirect('panel:galery')
+
+
+# login
+def login_panel(request):
+    if request.user.is_authenticated:
+        return redirect('panel:index')
+    
+    else:
+        if request.method == 'POST':
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('panel:index')
+            else:
+                messages.error(request,('Login gagal. username/password salah'))
+                return redirect('panel:login')
+        
+        else:
+            return render(request, 'panel/login.html')
+
+# logout
+def logout_panel(request):
+    logout(request)
+    messages.success(request,('Anda telah Logout dari dashboard admin'))
+    return redirect('panel:login')
