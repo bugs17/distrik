@@ -1,7 +1,13 @@
+
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+
+
+from django.contrib.auth.models import User, Group
+
 
 # import model
 from sejarah.models import Sejarah
@@ -14,7 +20,7 @@ from galery.models import Galery
 # import model statistik
 from statistik.models import DataPerKampung
 
-from .forms import SejarahForm, GeografisForm, PemerintahForm, OrganisasiForm, AdministrasiForm, BeritaForm, DataForm, GaleryForm
+from .forms import SejarahForm, GeografisForm, PemerintahForm, OrganisasiForm, AdministrasiForm, BeritaForm, DataForm, GaleryForm, CrateUserForm
 
 
 # index admin panel
@@ -586,3 +592,54 @@ def logout_panel(request):
     logout(request)
     messages.success(request,('Anda telah Logout dari dashboard admin'))
     return redirect('panel:login')
+
+
+
+
+
+
+
+# register
+@login_required(login_url='panel:login')
+def register(request):
+    grup = Group.objects.all()
+    if request.method == 'POST':
+        form = CrateUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            group = Group.objects.get(name=request.POST.get('test')
+)
+            user.groups.add(group)
+            return redirect('panel:user')
+        else:
+            form = CrateUserForm()
+            context = {
+                'gagal':'GAGAL!! Password harus 8 karakter dan mengandung angka',
+                'form':form,
+                'grup':grup,
+            }
+            return render(request,'panel/register.html',context)
+
+
+    else:
+
+        form = CrateUserForm()
+        context = {
+            'form': form,
+            'grup': grup,
+        }
+        return render(request, 'panel/register.html', context)
+
+
+def user_page(request):
+    user = User.objects.all().order_by('-id')
+
+    
+    context = {
+        'user': user,
+
+        
+    }
+    return render(request, 'panel/user_page.html', context)
+
+

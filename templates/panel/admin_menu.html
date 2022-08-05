@@ -133,17 +133,21 @@
       </li>
       
       
-      {% if user.is_authenticated %}
+      
+      {% if user.groups.all.0.name == 'admin'  %}
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Admin</span></li>
       
       <li class="menu-item">
-        <a href="#" class="menu-link">
+        <a href="{% url 'panel:user' %}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-user"></i>
           <div data-i18n="Basic">User</div>
         </a>
       </li>
-        
       {% endif %}
+        
+      
+        
+     
         
      
 

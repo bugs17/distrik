@@ -1,0 +1,102 @@
+{% extends '../adminbase.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+
+<div>
+
+  <a href="{% url 'panel:register' %}" class="btn btn-success my-2">Tambah user</a>
+
+  <div class="card">
+        <h5 class="card-header">List user</h5>
+        <div class="card-body">
+            <div class="table-responsive text-nowrap">
+                <!-- tabel -->
+                <form action="" method="post">
+                    {% csrf_token %}
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Username</th>
+                      <th>Email</th>
+                      <th>STATUS</th>
+                      <th>Foto</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                        
+                        {% for user in user %}    
+                      <tr>
+                        <td>
+                          <a href="#" style="color: #697a8d;"><strong>{{ user.username}}</strong></a>
+                        </td>
+                        <td><strong>{{ user.email }}</strong></td>
+                        <td>
+                            {{ user.groups.all.0 }}  
+ 
+                        </td>
+                        
+                        {% if user.userprofile.foto %}
+                        <td> <img src="{{ user.userprofile.foto.url }}" width="90px"> </td>
+                        {% else %}
+                        <td> Tidak ada foto </td>
+                        {% endif %}
+                            
+                        
+                        <td>
+                          <a href="#" class="btn btn-success my-2">Edit</a>
+                          <a 
+                            class="btn btn-danger"
+                            style="color: white;"
+                            data-bs-toggle="modal" 
+                            data-bs-target="#hapus-{{ data.id }}"              
+                          >Hapus</a>
+                        </td>
+                      </tr>
+                      <div class="modal fade" id="hapus-{{ data.id }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col mb-3">
+                                   <center><h5>Hapus Data <strong>#?</strong></h5></center>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <a href="#" class="btn btn-danger">Hapus</a>
+                              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                Batal
+                              </button>
+                              
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                </form>
+                <!-- /tabel -->
+              </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+
+
+
+

@@ -1,8 +1,9 @@
-from cProfile import label
-from codecs import namereplace_errors
-from dataclasses import fields
+
 from django import forms
 from django.forms import ModelForm
+
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 # import model
 from sejarah.models import Sejarah
@@ -12,6 +13,18 @@ from administrasi.models import Administrasi
 from berita.models import Berita
 from statistik.models import DataPerKampung
 from galery.models import Galery
+
+
+
+
+
+# form untuk register user
+class CrateUserForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2', 'groups')
+
+
 
 
 # create form untuk update sejarah distrik

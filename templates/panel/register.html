@@ -1,0 +1,90 @@
+{% extends '../adminbase.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col-xxl">
+          
+      {% if gagal %}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+          {{ gagal }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endif %}  
+
+      
+
+        
+      {% for message in messages %}
+      {% if message.tags == 'success' %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+      {% endif %}  
+      {% endfor %}
+
+        <div class="card mb-4">
+          
+          <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">Buat user baru!</h5>              
+          </div>
+          <div class="card-body">
+
+            <form id="formAuthentication" class="mb-3" method="post">
+              {% csrf_token %}
+              
+              <!-- username -->
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                {% render_field form.username class="form-control" type="text" id="username" name="username" placeholder="Masukan username" autocomplete="off" %}
+              </div>
+              <!-- email -->
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                {% render_field form.email class="form-control" type="email" id="email" name="email" placeholder="Masukan email" %}
+              </div>
+              <!-- password1 -->
+              <div class="mb-3 form-password-toggle">
+                <label class="form-label" for="password1">Password</label>
+                <div class="input-group input-group-merge">
+                {% render_field form.password1 class="form-control" type="password" id="password1" name="password1" aria-describedby="password" placeholder="Masukan password, minimal 8 karakter dan mengandung angka" %}
+                  <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                </div>
+              </div>
+              <!-- password2 -->
+              <div class="mb-3 form-password-toggle">
+                <label class="form-label" for="password2">Konfirmasi Password</label>
+                <div class="input-group input-group-merge">
+                {% render_field form.password2 class="form-control" type="password" id="password2" name="password2" aria-describedby="password" placeholder="Masukan password sama seperti di atas" %}
+                  <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="defaultSelect" class="form-label">Default select</label>
+                <select id="defaultSelect" name="test" class="form-select">
+                  
+                  {% for group in grup %}
+                  <option value="{{group.name}}">{{group.name}}</option>
+                    
+                  {% endfor %}
+
+                </select>
+              </div>
+              <div class="row justify-content-start">
+                <div class="col-sm-10">
+                  <input class="btn btn-success" type="submit" value="Daftar">
+                  <a href= "{% url 'panel:user' %}"  class="btn btn-danger">Kembali</a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+</div>
+
+
+{% endblock %}

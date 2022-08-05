@@ -8,6 +8,11 @@ urlpatterns = [
     
     path('loginpanel/',views.login_panel, name='login'),
     path('logoutpanel/',views.logout_panel, name='logout'),
+    path('register/',views.register, name='register'),
+    path('user/',views.user_page, name='user'),
+
+
+    # ------------------------------ #
     path('',views.index, name='index'),
     path('sejarahdistrik/',views.sejarah, name='getsejarah'),
     path('updatesejarah/<str:pk>',views.update_sejarah, name='updatesejarah'),

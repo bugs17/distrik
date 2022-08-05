@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'berita',
     'galery',
     'userpanel',
+    'widget_tweaks',
 
     
 ]
