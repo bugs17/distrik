@@ -10,6 +10,7 @@ urlpatterns = [
     path('logoutpanel/',views.logout_panel, name='logout'),
     path('register/',views.register, name='register'),
     path('user/',views.user_page, name='user'),
+    path('updateuser/<str:pk>',views.update_user, name='updateuser'),
 
 
     # ------------------------------ #

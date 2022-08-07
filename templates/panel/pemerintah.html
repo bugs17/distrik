@@ -5,7 +5,12 @@
 
 <div>
 
+  
+  {% if groupcheck == request.user.groups.all.0 %}
+    
   <a href="{% url 'panel:addpemerintah' %}" class="btn btn-success my-2">Tambah data</a>
+  {% endif %}
+    
   <div class="card">
         <h5 class="card-header">{{ judul }}</h5>
         <div class="table-responsive text-nowrap">
@@ -16,7 +21,12 @@
                 <th>golongan</th>
                 <th>Jabatan</th>
                 <th>Foto</th>
-                <th>Actions</th>
+                  
+                  {% if groupcheck == request.user.groups.all.0 %}
+                    
+                  <th>Actions</th>
+                  {% endif %}
+                    
               </tr>
             </thead>
             <tbody class="table-border-bottom-0">
@@ -48,6 +58,8 @@
                     </li>
                   </ul>
                 </td>
+                
+                {% if groupcheck == request.user.groups.all.0 %}
                 <td>
                   <div class="dropdown">
                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -67,7 +79,7 @@
                     </div>
                   </div>
                 </td>
-
+                  
                 <!-- modal here -->
                 <div class="modal fade" id="hapus-{{ pemerintah.id }}" tabindex="-1" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -97,6 +109,9 @@
                     </div>
                   </div>
                 </div>
+                {% endif %}
+                  
+
 
               </tr>
               {% endfor %}

@@ -40,7 +40,12 @@
       </div>
     </div>
 </div>
+
+{% if groupcheck == request.user.groups.all.0 %}
+  
 <a href="{% url 'panel:updategeografis' geografis.id %}" class="btn btn-success tombolupdate">Update</a>
+{% endif %}
+  
 {% endfor %}
 </div>
 {% endblock content %}

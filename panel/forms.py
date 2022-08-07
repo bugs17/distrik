@@ -2,7 +2,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 
 # import model
@@ -15,6 +15,18 @@ from statistik.models import DataPerKampung
 from galery.models import Galery
 
 
+
+# form untuk change informasi user by admin
+class ChangeUserForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password', 'is_staff',)
+
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control', 'id': 'username','name':'username' }),
+            'email': forms.TextInput(attrs={'class': 'form-control', 'id': 'email','type':'email' }),
+            
+        }
 
 
 

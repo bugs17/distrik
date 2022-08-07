@@ -134,7 +134,8 @@
       
       
       
-      {% if user.groups.all.0.name == 'admin'  %}
+        
+      {% if groupcheck == request.user.groups.all.0  %}
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Admin</span></li>
       
       <li class="menu-item">
@@ -144,6 +145,8 @@
         </a>
       </li>
       {% endif %}
+
+        
         
       
         

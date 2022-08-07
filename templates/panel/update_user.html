@@ -1,0 +1,64 @@
+{% extends '../adminbase.html' %}
+<!-- {% load widget_tweaks %} -->
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col-xxl">
+          
+
+        <div class="card mb-4">
+          
+          <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">Update data user!</h5>              
+          </div>
+          <div class="card-body">
+
+            <form id="formAuthentication" class="mb-3" method="post">
+              {% csrf_token %}
+              
+              <!-- username -->
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                {{ form.username }}
+              </div>
+             
+              <!-- email -->
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                {{ form.email }}
+              </div>
+
+              <div style="display:none;">
+
+                  {{form.password}}
+              </div>
+
+              <div class="mb-3">
+                <label for="defaultSelect" class="form-label">Status</label>
+                <select id="defaultSelect" name="pilihgroup" class="form-select">
+                  
+                    <option>------</option>
+                  {% for group in grup %}
+                  <option value="{{group.name}}">{{group.name}}</option>
+                    
+                  {% endfor %}
+
+                </select>
+              </div>
+
+              <div class="row justify-content-start">
+                <div class="col-sm-10">
+                  <input class="btn btn-success" type="submit" value="Simpan">
+                  <a href= "{% url 'panel:user' %}"  class="btn btn-danger">Kembali</a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+</div>
+
+
+{% endblock %}

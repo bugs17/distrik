@@ -5,7 +5,12 @@
 
 <div>
 
+  
+  {% if groupcheck == request.user.groups.all.0 %}
+    
   <a href="{% url 'panel:adddata' %}" class="btn btn-success my-2">Tambah data</a>
+  {% endif %}
+    
   {% if hapus %}
             <div class="alert alert-warning alert-dismissible" role="alert">
               {{ hapus }}
@@ -25,7 +30,12 @@
                       <th>Jumlah Kepala Keluarga</th>
                       <th>Puskesmas</th>
                       <th>Sekolah</th>
+                      
+                      {% if groupcheck == request.user.groups.all.0 %}
+                        
                       <th>Action</th>
+                      {% endif %}
+                        
                     </tr>
                   </thead>
                   <tbody>
@@ -43,6 +53,9 @@
                         <td><strong>{{data.kk}}</strong></td>
                         <td><strong>{{data.puskesmas}}</strong></td>
                         <td><strong>{{data.sekolah}}</strong></td>
+                        
+                        {% if groupcheck == request.user.groups.all.0 %}
+                          
                         <td>
                           <a href="{% url 'panel:updatedata' data.id %}" class="btn btn-success my-2">Edit</a>
                           <a 
@@ -52,35 +65,41 @@
                             data-bs-target="#hapus-{{ data.id }}"              
                           >Hapus</a>
                         </td>
+                        {% endif %}
+                          
                       </tr>
-                      <div class="modal fade" id="hapus-{{ data.id }}" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <button
-                                type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                              ></button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="row">
-                                <div class="col mb-3">
-                                   <center><h5>Hapus Data <strong>{{data.nama_kampung}}?</strong></h5></center>
+                      
+                      {% if groupcheck == request.user.groups.all.0 %}
+                        <div class="modal fade" id="hapus-{{ data.id }}" tabindex="-1" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="row">
+                                  <div class="col mb-3">
+                                    <center><h5>Hapus Data <strong>{{data.nama_kampung}}?</strong></h5></center>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="modal-footer">
-                              <a href="{% url 'panel:hapusdata' data.id %}" class="btn btn-danger">Hapus</a>
-                              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Batal
-                              </button>
-                              
+                              <div class="modal-footer">
+                                <a href="{% url 'panel:hapusdata' data.id %}" class="btn btn-danger">Hapus</a>
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                  Batal
+                                </button>
+                                
+                              </div>
                             </div>
                           </div>
                         </div>
-                    </div>
+                      {% endif %}
+                        
                     {% endfor %}
 
                     {% else %}

@@ -3,7 +3,12 @@
 
 {% block content %}
 <div >
-    <a href="{% url 'panel:addadministrasi' %}" class="btn btn-success my-2">Tambah data</a>
+  
+  {% if groupcheck == request.user.groups.all.0 %}
+    
+  <a href="{% url 'panel:addadministrasi' %}" class="btn btn-success my-2">Tambah data</a>
+  {% endif %}
+    
     <div class="card container" style="height: 100%; padding: 30px;">
                       
                         <h3>
@@ -35,19 +40,27 @@
                                           <p>Persyaratan {{administrasi.nama_layanan | safe}}</p>
                                           {{administrasi.persyaratan | safe}}
                                           <div>
-                                          <a href="{% url 'panel:updateadministrasi' administrasi.id %}" class="btn btn-success tombolupdate">Edit</a>
-                                          <a 
-                                          class="btn btn-danger tombolupdate"
-                                          style="color: white;"
-                                          data-bs-toggle="modal" 
-                                          data-bs-target="#hapus-{{ administrasi.id }}"
-                                          
-                                          >Hapus</a>
+                                            
+                                            {% if groupcheck == request.user.groups.all.0 %}
+                                              
+                                            <a href="{% url 'panel:updateadministrasi' administrasi.id %}" class="btn btn-success tombolupdate">Edit</a>
+                                            <a 
+                                            class="btn btn-danger tombolupdate"
+                                            style="color: white;"
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#hapus-{{ administrasi.id }}"
+                                            
+                                            >Hapus</a>
+                                            {% endif %}
+                                              
 
                                           </div>
                                         </div>
                                       </div>
                                     </div>
+                                    
+                                    {% if groupcheck == request.user.groups.all.0 %}
+                                      
                                     <div class="modal fade" id="hapus-{{ administrasi.id }}" tabindex="-1" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                           <div class="modal-content">
@@ -76,6 +89,8 @@
                                           </div>
                                         </div>
                                     </div>
+                                    {% endif %}
+                                      
                                   </div>
                                   {% endfor %}
 

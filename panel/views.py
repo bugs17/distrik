@@ -1,4 +1,6 @@
 
+from tokenize import group
+from unicodedata import name
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -20,18 +22,32 @@ from galery.models import Galery
 # import model statistik
 from statistik.models import DataPerKampung
 
-from .forms import SejarahForm, GeografisForm, PemerintahForm, OrganisasiForm, AdministrasiForm, BeritaForm, DataForm, GaleryForm, CrateUserForm
+# from dari app panel
+from .forms import (
+    SejarahForm, 
+    GeografisForm, 
+    PemerintahForm, 
+    OrganisasiForm, 
+    AdministrasiForm, 
+    BeritaForm, 
+    DataForm, 
+    GaleryForm, 
+    CrateUserForm, 
+    ChangeUserForm
+) 
 
 
 # index admin panel
 @login_required(login_url='panel:login')
 def index(request):
+    groupcheck = Group.objects.get(name= 'admin')
 
     pemerintah = Pemerintah.objects.all()
 
     context = {
         'title': 'Admin Panel Distrik Ninati',
         'pemerintah': pemerintah,
+        'groupcheck': groupcheck,
     }
 
     return render(request, 'panel/index.html', context)
@@ -40,12 +56,13 @@ def index(request):
 # get sejarah
 @login_required(login_url='panel:login')
 def sejarah(request):
-
+    groupcheck = Group.objects.get(name= 'admin')
     sejarah = Sejarah.objects.all()
 
     context ={
         'title' : 'Panel | Sejarah Distrik',
         'sejarah': sejarah,
+        'groupcheck': groupcheck,
     }
 
     return render(request, 'panel/sejarahdistrik.html', context)
@@ -53,6 +70,7 @@ def sejarah(request):
 # update sejarah
 @login_required(login_url='panel:login')
 def update_sejarah(request, pk):
+    groupcheck = Group.objects.get(name= 'admin')
     sejarah_update = Sejarah.objects.get(id=pk)
     form = SejarahForm( request.POST or None, instance=sejarah_update)
     link_kembali = '/panel/sejarahdistrik/'
@@ -67,6 +85,7 @@ def update_sejarah(request, pk):
         'keterangan': 'Update Sejarah Distrik',
         'form': form,
         'link_kembali': link_kembali,
+        'groupcheck': groupcheck,
         
     }
 
@@ -76,14 +95,15 @@ def update_sejarah(request, pk):
 # get geografis
 @login_required(login_url='panel:login')
 def geografis(request):
-
+    groupcheck = Group.objects.get(name= 'admin')
     geografis = Geografis.objects.all()
     peta = f'<iframe class="col-sm-8" height="558" id="gmap_canvas" src="https://maps.google.com/maps?q=ninati&t=&z=11&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>'
 
     context = {
         'title' : 'Panel | Geografis Distrik',
         'geografis': geografis,
-        'peta' : peta
+        'peta' : peta,
+        'groupcheck': groupcheck,
         
     }
     return render(request, 'panel/geografis.html', context)
@@ -92,6 +112,7 @@ def geografis(request):
 # update geografis
 @login_required(login_url='panel:login')
 def update_geografis(request, pk):
+    groupcheck = Group.objects.get(name= 'admin')
     geografis_update = Geografis.objects.get(id=pk)
     form = GeografisForm( request.POST or None, instance=geografis_update)
     link_kembali = '/panel/geografisdistrik/'
@@ -104,7 +125,8 @@ def update_geografis(request, pk):
         'title':'Panel | Update Geografis Distrik',
         'keterangan': 'Update Geografis Distrik',
         'form': form,
-        'link_kembali': link_kembali
+        'link_kembali': link_kembali,
+        'groupcheck': groupcheck,
         
     }
 
@@ -114,13 +136,14 @@ def update_geografis(request, pk):
 # get geografis
 @login_required(login_url='panel:login')
 def pemerintah(request):
-
+    groupcheck = Group.objects.get(name= 'admin')
     pemerintah = Pemerintah.objects.all().order_by('-id')
 
     context = {
         'title' : 'Panel | Pemerintah Distrik',
         'judul' : 'Pemerintah Distrik',
         'pemerintah': pemerintah,
+        'groupcheck': groupcheck,
 
         
     }
@@ -130,6 +153,7 @@ def pemerintah(request):
 # tambah data pemerintah
 @login_required(login_url='panel:login')
 def add_pemerintah(request):
+    groupcheck = Group.objects.get(name= 'admin')
     tombol = "Tambah"
     if request.method == 'POST':
         form = PemerintahForm(request.POST, request.FILES)
@@ -143,6 +167,7 @@ def add_pemerintah(request):
                 'form': form,
                 'pesan': pesan,
                 'tombol': tombol,
+                'groupcheck': groupcheck,
             }
 
             return render(request, 'panel/add_pemerintah.html', context)
@@ -155,6 +180,7 @@ def add_pemerintah(request):
             'keterangan': 'Tambah Data',
             'form': form,
             'tombol': tombol,
+            'groupcheck': groupcheck,
         }
     return render(request, 'panel/add_pemerintah.html', context)
 
@@ -162,6 +188,7 @@ def add_pemerintah(request):
 # update data pemerintah
 @login_required(login_url='panel:login')
 def update_pemerintah(request, pk):
+    groupcheck = Group.objects.get(name= 'admin')
     pemerintah_update = Pemerintah.objects.get(id=pk)
     form = PemerintahForm( request.POST or None, request.FILES or None, instance=pemerintah_update)
     link_kembali = '/panel/pemerintahdistrik/'
@@ -177,6 +204,7 @@ def update_pemerintah(request, pk):
         'form': form,
         'link_kembali': link_kembali,
         'tombol': tombol,
+        'groupcheck': groupcheck,
         
     }
 
@@ -196,6 +224,7 @@ def hapus_pemerintah(request, pk):
 # get struktur organisasi
 @login_required(login_url='panel:login')
 def organisasi(request):
+    groupcheck = Group.objects.get(name= 'admin')
     camat = Pemerintah.objects.get(struktur_organisasi='camat')
     organisasi = Organisasi.objects.all()
 
@@ -204,6 +233,7 @@ def organisasi(request):
         'judul' : 'Struktur Organisasi Pemerintahan Distrik',
         'organisasi': organisasi,
         'camat': camat,
+        'groupcheck': groupcheck,
         
     }
 
@@ -213,6 +243,7 @@ def organisasi(request):
 # update organisasi
 @login_required(login_url='panel:login')
 def update_organisasi(request, pk):
+    groupcheck = Group.objects.get(name= 'admin')
     organisasi_update = Organisasi.objects.get(id=pk)
     form = OrganisasiForm( request.POST or None, request.FILES or None, instance=organisasi_update)
     link_kembali = '/panel/organisasi/'
@@ -226,6 +257,7 @@ def update_organisasi(request, pk):
         'title':'Panel | Update Data Pemerintah',
         'keterangan': 'Update Struktur Organisasi',
         'form': form,
+        'groupcheck': groupcheck,
         
     }
 
@@ -234,12 +266,13 @@ def update_organisasi(request, pk):
 # get administrasi
 @login_required(login_url='panel:login')
 def administrasi(request):
-
+    groupcheck = Group.objects.get(name= 'admin')
     administrasi = Administrasi.objects.all().order_by('-id')
 
     context ={
         'title':'Panel | Administrasi',
         'administrasi': administrasi,
+        'groupcheck': groupcheck,
         
     }
     return render(request, 'panel/administrasi.html',context)
@@ -247,6 +280,7 @@ def administrasi(request):
 # add administrasi
 @login_required(login_url='panel:login')
 def add_administrasi(request):
+    groupcheck = Group.objects.get(name= 'admin')
     tombol = "Tambah"
     link_kembali = '/panel/administrasi/'
     if request.method == 'POST':
@@ -262,6 +296,7 @@ def add_administrasi(request):
                 'pesan': pesan,
                 'tombol': tombol,
                 'link_kembali': link_kembali,
+                'groupcheck': groupcheck,
             }
 
             return render(request, 'panel/add_administrasi.html', context)
@@ -275,6 +310,7 @@ def add_administrasi(request):
             'form': form,
             'tombol': tombol,
             'link_kembali': link_kembali,
+            'groupcheck': groupcheck,
         }
     return render(request, 'panel/add_administrasi.html', context)
 
@@ -282,6 +318,7 @@ def add_administrasi(request):
 # edit administrasi administrasi
 @login_required(login_url='panel:login')
 def update_administrasi(request, pk):
+    groupcheck = Group.objects.get(name= 'admin')
     administrasi_update = Administrasi.objects.get(id=pk)
     form = AdministrasiForm( request.POST or None, request.FILES or None, instance=administrasi_update)
     link_kembali = '/panel/administrasi/'
@@ -296,6 +333,7 @@ def update_administrasi(request, pk):
         'keterangan': 'Update administrasi',
         'form': form,
         'tombol': tombol,
+        'groupcheck': groupcheck,
         
     }
 
@@ -315,11 +353,13 @@ def hapus_administrasi(request, pk):
 # get berita
 @login_required(login_url='panel:login')
 def berita(request):
+    groupcheck = Group.objects.get(name= 'admin')
     berita = Berita.objects.all().order_by('-update')
     context = {
         'title' : 'Panel | List Berita',
         'judul' : 'List berita',
         'berita': berita,
+        'groupcheck': groupcheck,
     }
     return render(request, 'panel/berita.html', context)
 
@@ -327,6 +367,7 @@ def berita(request):
 # add berita
 @login_required(login_url='panel:login')
 def add_berita(request):
+    groupcheck = Group.objects.get(name= 'admin')
     tombol = "Tambah"
     if request.method == 'POST':
         form = BeritaForm(request.POST, request.FILES)
@@ -340,6 +381,7 @@ def add_berita(request):
                 'form': form,
                 'pesan': pesan,
                 'tombol': tombol,
+                'groupcheck': groupcheck,
             }
 
             return render(request, 'panel/add_berita.html', context)
@@ -352,6 +394,7 @@ def add_berita(request):
             'keterangan': 'Tambah Berita',
             'form': form,
             'tombol': tombol,
+            'groupcheck': groupcheck,
         }
     return render(request, 'panel/add_berita.html', context)
 
@@ -360,6 +403,7 @@ def add_berita(request):
 # update berita
 @login_required(login_url='panel:login')
 def update_berita(request, pk):
+    groupcheck = Group.objects.get(name= 'admin')
     berita_update = Berita.objects.get(id=pk)
     form = BeritaForm( request.POST or None, request.FILES or None, instance=berita_update)
     link_kembali = '/panel/berita/'
@@ -373,6 +417,7 @@ def update_berita(request, pk):
         'title':'Panel | Update berita',
         'keterangan': 'Update data berita',
         'form': form,
+        'groupcheck': groupcheck,
         
     }
 
@@ -393,7 +438,7 @@ def hapus_berita(request, pk):
 # get data
 @login_required(login_url='panel:login')
 def data(request):
-
+    groupcheck = Group.objects.get(name= 'admin')
     datakampung = DataPerKampung.objects.all()
 
 
@@ -401,6 +446,7 @@ def data(request):
         'title':'Panel | Data kampung',
         'judul': 'List kampung dan data',
         'data':datakampung,
+        'groupcheck': groupcheck,
 
     }
     return render(request, 'panel/data.html', context)
@@ -410,6 +456,7 @@ def data(request):
 # add data
 @login_required(login_url='panel:login')
 def add_data(request):
+    groupcheck = Group.objects.get(name= 'admin')
     tombol = "Tambah"
     if request.method == 'POST':
         kampung = request.POST['nama_kampung'].lower()
@@ -423,6 +470,7 @@ def add_data(request):
                 'keterangan': 'Tambah data kampung',
                 'form': form,
                 'tombol': tombol,
+                'groupcheck': groupcheck,
             }
             return render(request, 'panel/add_data.html', context)
 
@@ -436,6 +484,7 @@ def add_data(request):
                 'form': form,
                 'pesan': pesan,
                 'tombol': tombol,
+                'groupcheck': groupcheck,
             }
 
             return render(request, 'panel/add_data.html', context)
@@ -456,6 +505,7 @@ def add_data(request):
 # update data
 @login_required(login_url='panel:login')
 def update_data(request, pk):
+    groupcheck = Group.objects.get(name= 'admin')
     tombol = "Simpan"
     data_update = DataPerKampung.objects.get(id=pk)
     form = DataForm( request.POST or None, request.FILES or None, instance=data_update)
@@ -471,6 +521,7 @@ def update_data(request, pk):
         'keterangan': 'Update data kampung',
         'form': form,
         'tombol': tombol,
+        'groupcheck': groupcheck,
         
     }
 
@@ -490,11 +541,13 @@ def hapus_data(request, pk):
 # get galery
 @login_required(login_url='panel:login')
 def galery(request):
+    groupcheck = Group.objects.get(name= 'admin')
     galery = Galery.objects.all().order_by('-id')
     context = {
         'title':'Panel | Galery',
         'judul': 'List Galery',
         'galery':galery,
+        'groupcheck': groupcheck,
     }
 
     return render(request, 'panel/galery.html', context)
@@ -504,6 +557,7 @@ def galery(request):
 # add data galery
 @login_required(login_url='panel:login')
 def add_galery(request):
+    groupcheck = Group.objects.get(name= 'admin')
     tombol = "Tambah"
     if request.method == 'POST':
         form = GaleryForm(request.POST, request.FILES)
@@ -517,6 +571,7 @@ def add_galery(request):
                 'form': form,
                 'pesan': pesan,
                 'tombol': tombol,
+                'groupcheck': groupcheck,
             }
 
             return render(request, 'panel/add_galery.html', context)
@@ -529,6 +584,7 @@ def add_galery(request):
             'keterangan': 'Tambah Galery',
             'form': form,
             'tombol': tombol,
+            'groupcheck': groupcheck,
         }
     return render(request, 'panel/add_galery.html', context)
 
@@ -537,6 +593,7 @@ def add_galery(request):
 # update galery
 @login_required(login_url='panel:login')
 def update_galery(request, pk):
+    groupcheck = Group.objects.get(name= 'admin')
     tombol = "Simpan"
     galery_update = Galery.objects.get(id=pk)
     form = GaleryForm( request.POST or None, request.FILES or None, instance=galery_update)
@@ -551,6 +608,7 @@ def update_galery(request, pk):
         'keterangan': 'Update data Galery',
         'form': form,
         'tombol': tombol,
+        'groupcheck': groupcheck,
         
     }
 
@@ -602,21 +660,28 @@ def logout_panel(request):
 # register
 @login_required(login_url='panel:login')
 def register(request):
+    groupcheck = Group.objects.get(name= 'admin')
     grup = Group.objects.all()
     if request.method == 'POST':
         form = CrateUserForm(request.POST)
         if form.is_valid():
             user = form.save()
-            group = Group.objects.get(name=request.POST.get('test')
-)
-            user.groups.add(group)
-            return redirect('panel:user')
+            group = Group.objects.get(name=request.POST.get('pilihgroup'))
+            if request.POST.get('pilihgroup') == 'admin':
+                user.is_staff = True
+                form.save()
+                user.groups.add(group)
+                return redirect('panel:user')
+            else:
+                user.groups.add(group)
+                return redirect('panel:user')
         else:
             form = CrateUserForm()
             context = {
-                'gagal':'GAGAL!! Password harus 8 karakter dan mengandung angka',
+                'gagal':'GAGAL!! Password harus 8 karakter dan mengandung angka, periksa kembali data yang dimasukan',
                 'form':form,
                 'grup':grup,
+                'groupcheck':groupcheck,
             }
             return render(request,'panel/register.html',context)
 
@@ -627,18 +692,70 @@ def register(request):
         context = {
             'form': form,
             'grup': grup,
+            'groupcheck':groupcheck,
         }
         return render(request, 'panel/register.html', context)
 
 
-def user_page(request):
-    user = User.objects.all().order_by('-id')
 
+# edit user informasi by admin
+def update_user(request, pk):
+    grup = Group.objects.all()
+    groupcheck = Group.objects.get(name= 'admin') 
+    user_update = User.objects.get(id=pk)
+    form = ChangeUserForm( request.POST or None, instance=user_update)
+    link_kembali = '/panel/user/'
+    
+    
+    if form.is_valid():
+        datausername = form.cleaned_data['username']
+        form.save()
+        group = Group.objects.get(name=request.POST.get('pilihgroup'))
+        user = User.objects.get(username=datausername)
+        if user.groups.filter(name='admin'):
+            user.groups.clear()
+            user.groups.add(group)
+            form.save()
+
+
+            
+        elif user.groups.filter(name='user'):
+            user.groups.clear()
+            user.groups.add(group)
+            form.save() 
+     
+        else :
+            user.groups.add(group)
+            form.save()
+
+
+        return redirect(link_kembali)
     
     context = {
-        'user': user,
-
+        'title':'Panel | Update data user',
+        'keterangan': 'Update data user',
+        'groupcheck': groupcheck,
+        'form': form,
+        'grup': grup,
         
+    }
+
+    return render(request, 'panel/update_user.html' , context)
+
+
+
+
+# user page (hanya di tampilakn ketika yg request berada didalam group admin)
+@login_required(login_url='panel:login')
+def user_page(request):
+    groupcheck = Group.objects.get(name= 'admin')
+    user = User.objects.all().order_by('-id')
+
+
+    context = {
+        'user': user,
+        'groupcheck': groupcheck,
+   
     }
     return render(request, 'panel/user_page.html', context)
 

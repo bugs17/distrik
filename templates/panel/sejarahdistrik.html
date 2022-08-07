@@ -30,7 +30,12 @@
                       </div>
         
     </div>
-     <a href="{% url 'panel:updatesejarah' sejarah.id %}" class="btn btn-success tombolupdate">Update</a>
+    
+    {% if groupcheck == request.user.groups.all.0 %}
+      
+    <a href="{% url 'panel:updatesejarah' sejarah.id %}" class="btn btn-success tombolupdate">Update</a>
+    {% endif %}
+      
                 <!-- <button type="button" class="btn btn-success">Update</button> -->
      {% endfor %}
 </div>
