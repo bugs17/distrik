@@ -2,7 +2,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, SetPasswordForm
 from django.contrib.auth.models import User
 
 # import model
@@ -28,6 +28,11 @@ class ChangeUserForm(UserChangeForm):
             
         }
 
+# form change password tanpa old password
+class ChangePassForm(SetPasswordForm):
+    class Meta:
+        model = User
+        fields = ('new_password1', 'new_password2',)
 
 
 # form untuk register user

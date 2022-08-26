@@ -54,6 +54,7 @@
                             data-bs-toggle="modal" 
                             data-bs-target="#hapus-{{ data.id }}"              
                           >Hapus</a>
+                          <a href="{% url 'panel:changepassword' user.id %}" class="btn btn-outline-secondary my-2">Ubah Password</a>
                         </td>
                       </tr>
                       <div class="modal fade" id="hapus-{{ data.id }}" tabindex="-1" aria-hidden="true">

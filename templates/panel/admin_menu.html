@@ -14,6 +14,8 @@
 {% url 'panel:adddata' as adddata %}
 {% url 'panel:galery' as galery %}
 {% url 'panel:addgalery' as addgalery %}
+{% url 'panel:user' as user %}
+{% url 'panel:register' as register %}
 
 
 
@@ -138,7 +140,7 @@
       {% if groupcheck == request.user.groups.all.0  %}
       <li class="menu-header small text-uppercase"><span class="menu-header-text">Admin</span></li>
       
-      <li class="menu-item">
+      <li class="menu-item{% if request.path == user %} active {% elif request.path == register %} active {% endif %}">
         <a href="{% url 'panel:user' %}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-user"></i>
           <div data-i18n="Basic">User</div>

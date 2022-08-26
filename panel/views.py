@@ -33,7 +33,8 @@ from .forms import (
     DataForm, 
     GaleryForm, 
     CrateUserForm, 
-    ChangeUserForm
+    ChangeUserForm,
+    ChangePassForm
 ) 
 
 
@@ -682,6 +683,7 @@ def register(request):
                 'form':form,
                 'grup':grup,
                 'groupcheck':groupcheck,
+                'title': 'Panel | Buat user baru'
             }
             return render(request,'panel/register.html',context)
 
@@ -693,12 +695,14 @@ def register(request):
             'form': form,
             'grup': grup,
             'groupcheck':groupcheck,
+            'title': 'Panel | Buat user baru'
         }
         return render(request, 'panel/register.html', context)
 
 
 
 # edit user informasi by admin
+@login_required(login_url='panel:login')
 def update_user(request, pk):
     grup = Group.objects.all()
     groupcheck = Group.objects.get(name= 'admin') 
@@ -751,12 +755,32 @@ def user_page(request):
     groupcheck = Group.objects.get(name= 'admin')
     user = User.objects.all().order_by('-id')
 
-
     context = {
         'user': user,
         'groupcheck': groupcheck,
+        'title': 'Panel | user'
    
     }
     return render(request, 'panel/user_page.html', context)
 
 
+
+# rubah password tanpa old password
+@login_required(login_url='panel:login')
+def changepassword(request, pk):
+    user_update = User.objects.get(id=pk)
+    link_kembali = '/panel/user/'
+
+
+    if request.method == 'POST':
+        form = ChangePassForm(user=user_update, data=request.POST or None)
+        if form.is_valid():
+            form.save()
+            return redirect(link_kembali)
+    else:
+        form = ChangePassForm(user=user_update)
+        context = {
+            'form':form,
+            'title': 'Panel | Ubah Password'
+        }
+        return render(request, 'panel/ubah_password.html', context)
