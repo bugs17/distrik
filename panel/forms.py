@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm, SetPassw
 from django.contrib.auth.models import User
 
 # import model
+from .models import UserProfile
 from sejarah.models import Sejarah
 from geografis.models import Geografis
 from pemerintah.models import Pemerintah, Organisasi
@@ -16,11 +17,22 @@ from galery.models import Galery
 
 
 
+class UserProfileForm(ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('first_name', 'last_name', 'phone', 'foto')
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control', }),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', }),
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'maxlength':'12', }),
+            
+        }
+
 # form untuk change informasi user by admin
 class ChangeUserForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'is_staff',)
+        fields = ('username', 'email', 'password', )
 
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control', 'id': 'username','name':'username' }),

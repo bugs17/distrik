@@ -114,7 +114,7 @@
                     <div class="avatar avatar-online">
                       
                       {% if request.user.userprofile.foto %}
-                      <img src="{{ request.user.userprofile.foto.url }}" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="{{ request.user.userprofile.foto.url }}" alt class="w-px-40 h-saja rounded-circle" />
                       {% else %}
                       <img src="{% static 'img/user_blank.png' %}" alt class="w-px-40 h-auto rounded-circle" />
                       {% endif %}
@@ -127,7 +127,11 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
+                              {% if request.user.userprofile.foto %}
+                              <img src="{{ request.user.userprofile.foto.url }}" alt class="w-px-40 h-saja rounded-circle" />
+                              {% else %}
                               <img src="{% static 'img/user_blank.png' %}" alt class="w-px-40 h-auto rounded-circle" />
+                              {% endif %}
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -141,7 +145,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a class="dropdown-item" href="{% url 'panel:userprofile' %}">
                         <i class="bx bx-user me-2"></i>
                         <span class="align-middle">Profil Saya</span>
                       </a>

@@ -1,11 +1,10 @@
 
-from tokenize import group
-from unicodedata import name
+
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+
 
 
 from django.contrib.auth.models import User, Group
@@ -34,7 +33,8 @@ from .forms import (
     GaleryForm, 
     CrateUserForm, 
     ChangeUserForm,
-    ChangePassForm
+    ChangePassForm,
+    UserProfileForm,
 ) 
 
 
@@ -768,6 +768,7 @@ def user_page(request):
 # rubah password tanpa old password
 @login_required(login_url='panel:login')
 def changepassword(request, pk):
+    groupcheck = Group.objects.get(name= 'admin')
     user_update = User.objects.get(id=pk)
     link_kembali = '/panel/user/'
 
@@ -781,6 +782,43 @@ def changepassword(request, pk):
         form = ChangePassForm(user=user_update)
         context = {
             'form':form,
-            'title': 'Panel | Ubah Password'
+            'title': 'Panel | Ubah Password',
+            'groupcheck':groupcheck
         }
         return render(request, 'panel/ubah_password.html', context)
+
+
+# user akun seting
+@login_required(login_url='panel:login')
+def akun_seting(request):
+    groupcheck = Group.objects.get(name= 'admin')
+    form = ChangeUserForm(request.POST or None, instance=request.user)
+    if form.is_valid():
+        form.save()
+        return redirect('/panel/')
+        
+
+    context = {
+        'title': 'Panel | Akun seting',
+        'form': form,
+        'groupcheck':groupcheck,
+    }
+    
+    return render(request, 'panel/akun_seting.html', context)
+
+
+# user profile seting
+@login_required(login_url='panel:login')
+def user_profile(request):
+    groupcheck = Group.objects.get(name= 'admin')
+    form = UserProfileForm(request.POST or None, request.FILES or None, instance=request.user.userprofile)
+    if form.is_valid():
+        form.save()
+        return redirect('/panel/')
+
+    context = {
+        'title': 'Panel | Profil seting',
+        'form': form,
+        'groupcheck':groupcheck,
+    }
+    return render(request, 'panel/personal_seting.html', context)

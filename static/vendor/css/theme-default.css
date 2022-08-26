@@ -213,8 +213,8 @@ button.list-group-item-primary.active {
 }
 .btn-primary:hover {
   color: #fff;
-  background-color: #5f61e6;
-  border-color: #5f61e6;
+  background-color: #0bb10b;
+  border-color: #0bb10b;
   transform: translateY(-1px);
 }
 .btn-check:focus + .btn-primary, .btn-primary:focus, .btn-primary.focus {
@@ -296,7 +296,7 @@ button.list-group-item-primary.active {
 }
 
 .nav .nav-link:hover, .nav .nav-link:focus {
-  color: #5f61e6;
+  color: #0dcc0d;
 }
 
 .nav-pills .nav-link.active, .nav-pills .nav-link.active:hover, .nav-pills .nav-link.active:focus {

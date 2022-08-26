@@ -6,7 +6,11 @@ from django.db.models.signals import post_save
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    foto = models.ImageField()
+    first_name = models.CharField(max_length=100, null=True)
+    last_name = models.CharField(max_length=100, null=True)
+    phone = models.IntegerField(null=True)
+    foto = models.ImageField(blank=True, null=True, upload_to="image/")
+
 
 
 def create_profile(sender, **kwargs):
