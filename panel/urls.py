@@ -12,6 +12,7 @@ urlpatterns = [
     path('user/',views.user_page, name='user'),
     path('updateuser/<str:pk>',views.update_user, name='updateuser'),
     path('changepassword/<str:pk>',views.changepassword, name='changepassword'),
+    path('deleteuser/<str:pk>',views.delete_user, name='deleteuser'),
     path('userprofile/',views.akun_seting, name='userprofile'),
     path('profileseting/',views.user_profile, name='profileseting'),
 
