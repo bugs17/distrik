@@ -765,6 +765,15 @@ def user_page(request):
 
 
 
+# hapus akun
+def delete_user(request, pk):
+    hapus_user = User.objects.filter(id=pk)
+    hapus_user.delete()
+
+    return redirect('panel:user')
+
+
+
 # rubah password tanpa old password
 @login_required(login_url='panel:login')
 def changepassword(request, pk):
@@ -788,6 +797,11 @@ def changepassword(request, pk):
         return render(request, 'panel/ubah_password.html', context)
 
 
+
+
+
+
+# personal
 # user akun seting
 @login_required(login_url='panel:login')
 def akun_seting(request):
@@ -807,6 +821,11 @@ def akun_seting(request):
     return render(request, 'panel/akun_seting.html', context)
 
 
+
+
+
+
+# personal
 # user profile seting
 @login_required(login_url='panel:login')
 def user_profile(request):
