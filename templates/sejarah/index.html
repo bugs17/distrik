@@ -3,6 +3,9 @@
 
 {% block content %}
    <div class="container">
+    
+    {% if sejarah %}
+
     {% for sejarah in sejarah %}
     <div class="three">
         <h1>{{ sejarah.judul }}</h1>
@@ -12,6 +15,18 @@
         {{sejarah.body | safe}}
     </div>
     {% endfor %}
+    {% else %}
+    <div class="three">
+        <h1>Sejarah Distrik Ninati</h1>
+    </div>
+    
+    <div class="isi">
+        <p>Belum ada data sejarah distrik yang di input.</p>
+        <p>Hubungi admin segera!</p>
+    </div>
+    {% endif %}
+        
+    
    </div>
 {% endblock content %}
     

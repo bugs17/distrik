@@ -37,11 +37,11 @@
         // setup
         const data = {
             
-            labels: [{% for kk in kk %} '{{kk.kampung_id}}', {% endfor %}],
+            labels: [ {% if data %} {% for data in data%} '{{data.nama_kampung}}', {% endfor %} {% else %} 'belum ada data' {% endif %}],
                 datasets: [{
                     label: 'Jumlah KK',
                     // data: [12, 19, 3, 5, 2, 3],
-                    data: [{% for kk in kk %} {{kk.jumlahKK}}, {% endfor %}],
+                    data: [{% for data in data%} '{{data.kk}}', {% endfor %}],
                     backgroundColor: [
                         'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',

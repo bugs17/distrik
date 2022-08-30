@@ -6,7 +6,33 @@
             <div class="three">
                 <h1>Layanan administrasi</h1>
             </div>
+
+            <!-- layanan star -->
             
+            {% if administrasi %}
+            {% for administrasi in administrasi %}   
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+                    <div class="service-item bg-light overflow-hidden h-100">
+                        <div class="service-text position-relative text-center h-100 p-4">
+                          <h5 class="mb-3">{{administrasi.nama_layanan}}</h5>
+                          <!-- <p>
+                            {{administrasi.persyaratan|safe}}
+                          </p> -->
+                          <a style="color: #66ce35;" class="small" href="#">Lihat<i class="fa fa-arrow-right ms-3"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="py-5">
+                <a href="#" class="btn btn-primary py-3 px-5">Layanan lainnya</a>
+            </div>
+            {% else %}
+            <p><strong>Belum ada data administrasi.</strong></p>
+            {% endif %}
+            <!-- layanan end -->
         </div>
+
     </div>
 </section>

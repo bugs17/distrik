@@ -1,9 +1,17 @@
 from django.shortcuts import render
-from statistik.models import DataPerKampung
+
 from django.db.models import Sum
 
-def index(request):
+from berita.models import Berita
+from pemerintah.models import Pemerintah
+from administrasi.models import Administrasi
+from statistik.models import DataPerKampung
 
+def index(request):
+    berita = Berita.objects.all().order_by('-update')[:6]
+    pemerintah = Pemerintah.objects.all().order_by('-id')
+    administrasi = Administrasi.objects.all().order_by('-id')
+    datastatistik = DataPerKampung.objects.all()
 
     # kk = KepalaKeluarga.objects.all()
     # semuaKampung= Populasi.objects.filter(jenisKelamin='P')
@@ -18,11 +26,15 @@ def index(request):
     # jumlahJiwa = [ninati, abonggo, harapan, mindip]
     
 
+
+
     context = {
         'title': 'Beranda',
-        # 'kk': kk,
-        # 'all': jumlahJiwa,
-        # 'semuaKampung': semuaKampung,
+        'berita': berita,
+        'pemerintah': pemerintah,
+        'administrasi': administrasi,
+        'data': datastatistik,
+
 
     }
     return render(request, 'index.html', context)
