@@ -31,7 +31,12 @@
             <div class="card">
               <div class="card-body">
                 
-                <h3 class="card-title m-2 headline-time text-hero-bold text-center">4</h3>
+                {% if jumlah_kampung %}
+                <h3 class="card-title m-2 headline-time text-hero-bold text-center">{{jumlah_kampung}}</h3>
+                {% else %}
+                <h3 class="card-title m-2 headline-time text-hero-bold text-center">0</h3>
+                {% endif %}
+                  
                 <small class=" fw-semibold">Jumlah Kampung</small>
               </div>
             </div>
@@ -40,8 +45,12 @@
             <div class="card">
               <div class="card-body">
                 
-                <h3 class="card-title m-2 headline-time text-hero-bold text-center">258</h3>
-                <small class="fw-semibold">Jumlah Jiwa</small>
+                {% if jumlah_penduduk %}
+                <h3 class="card-title m-2 headline-time text-hero-bold text-center">{{jumlah_penduduk}}</h3>
+                {% else %}
+                <h3 class="card-title m-2 headline-time text-hero-bold text-center">0</h3>
+                {% endif %}
+                <small class="fw-semibold">Jumlah Penduduk</small>
               </div>
             </div>
           </div>
@@ -109,9 +118,13 @@
           <div class="col-6 mb-4">
             <div class="card">
               <div class="card-body">
-                
-                <h3 class="card-title m-2 headline-time text-hero-bold text-center">60</h3>
-                <small class="fw-semibold">Jumlah KK</small>
+                {% if jumlah_kk %}
+                <h3 class="card-title m-2 headline-time text-hero-bold text-center">{{jumlah_kk}}</h3>
+                {% else %}
+                <h3 class="card-title m-2 headline-time text-hero-bold text-center">0</h3>
+                {% endif %}
+                  
+                <small class="fw-semibold">Kepala keluarga</small>
               </div>
             </div>
           </div>
@@ -119,8 +132,42 @@
             <div class="card">
               <div class="card-body">
                 
-                <h3 class="card-title m-2 headline-time text-hero-bold text-center">19</h3>
-                <small class="fw-semibold">Total Berita</small>
+                {% if jumlah_berita %}
+                <h3 class="card-title m-2 headline-time text-hero-bold text-center">{{jumlah_berita}}</h3>
+                {% else %}
+                <h3 class="card-title m-2 headline-time text-hero-bold text-center">0</h3>
+                {% endif %}
+                  
+                <small class="fw-semibold">Total Post Berita</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 mb-4">
+            <div class="card">
+              <div class="card-body">
+                
+                {% if jumlah_puskesmas %}
+                <h3 class="card-title m-2 headline-time text-hero-bold text-center">{{jumlah_puskesmas}}</h3>
+                {% else %}
+                <h3 class="card-title m-2 headline-time text-hero-bold text-center">0</h3>
+                {% endif %}
+                  
+                <small class="fw-semibold">Total Puskesmas</small>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-6 mb-4">
+            <div class="card">
+              <div class="card-body">
+                
+                {% if jumlah_sekolah %}
+                <h3 class="card-title m-2 headline-time text-hero-bold text-center">{{jumlah_sekolah}}</h3>
+                {% else %}
+                <h3 class="card-title m-2 headline-time text-hero-bold text-center">0</h3>
+                {% endif %} 
+                <small class="fw-semibold">Total Sekolah</small>
               </div>
             </div>
           </div>

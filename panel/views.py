@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-
+from django.db.models import Sum
 
 from django.contrib.auth.models import User, Group
 
@@ -44,11 +44,24 @@ def index(request):
     groupcheck = Group.objects.get(name= 'admin')
 
     pemerintah = Pemerintah.objects.all()
-
+    jumlah_kampung = DataPerKampung.objects.all().count()
+    jumlah_penduduk = DataPerKampung.objects.aggregate(total=Sum('jumlah_jiwa'))
+    jumlah_kk = DataPerKampung.objects.aggregate(total=Sum('kk'))
+    jumlah_puskesmas = DataPerKampung.objects.aggregate(total=Sum('puskesmas'))
+    jumlah_sekolah = DataPerKampung.objects.aggregate(total=Sum('sekolah'))
+    jumlah_berita = Berita.objects.all().count()
+    
+    
     context = {
         'title': 'Admin Panel Distrik Ninati',
         'pemerintah': pemerintah,
         'groupcheck': groupcheck,
+        'jumlah_kampung': jumlah_kampung,
+        'jumlah_penduduk': jumlah_penduduk['total'],
+        'jumlah_kk': jumlah_kk['total'],
+        'jumlah_puskesmas': jumlah_puskesmas['total'],
+        'jumlah_sekolah': jumlah_sekolah['total'],
+        'jumlah_berita': jumlah_berita,
     }
 
     return render(request, 'panel/index.html', context)
@@ -765,12 +778,16 @@ def user_page(request):
 
 
 
-# hapus akun
+# hapus akun by admin
+@login_required(login_url='panel:login')
 def delete_user(request, pk):
-    hapus_user = User.objects.filter(id=pk)
-    hapus_user.delete()
+    groupcheck = Group.objects.get(name= 'admin')
 
-    return redirect('panel:user')
+    if groupcheck:
+        hapus_user = User.objects.filter(id=pk)
+        hapus_user.delete()
+
+        return redirect('panel:user')
 
 
 
@@ -792,7 +809,8 @@ def changepassword(request, pk):
         context = {
             'form':form,
             'title': 'Panel | Ubah Password',
-            'groupcheck':groupcheck
+            'groupcheck':groupcheck,
+            'kembali': link_kembali,
         }
         return render(request, 'panel/ubah_password.html', context)
 
@@ -841,3 +859,25 @@ def user_profile(request):
         'groupcheck':groupcheck,
     }
     return render(request, 'panel/personal_seting.html', context)
+
+
+@login_required(login_url='panel:login')
+def changepassword_user(request):
+    groupcheck = Group.objects.get(name= 'admin')
+    link_kembali = '/panel/'
+
+
+    if request.method == 'POST':
+        form = ChangePassForm(user=request.user, data=request.POST or None)
+        if form.is_valid():
+            form.save()
+            return redirect(link_kembali)
+    else:
+        form = ChangePassForm(user=request.user)
+        context = {
+            'form':form,
+            'title': 'Panel | Ubah Password',
+            'groupcheck':groupcheck,
+            'kembali': link_kembali
+        }
+        return render(request, 'panel/ubah_password.html', context)

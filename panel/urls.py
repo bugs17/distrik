@@ -15,6 +15,7 @@ urlpatterns = [
     path('deleteuser/<str:pk>',views.delete_user, name='deleteuser'),
     path('userprofile/',views.akun_seting, name='userprofile'),
     path('profileseting/',views.user_profile, name='profileseting'),
+    path('changepassword-user/',views.changepassword_user, name='changepassworduser'),
 
 
 
