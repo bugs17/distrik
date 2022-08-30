@@ -52,12 +52,12 @@
                             class="btn btn-danger"
                             style="color: white;"
                             data-bs-toggle="modal" 
-                            data-bs-target="#hapus-{{ data.id }}"              
+                            data-bs-target="#hapus-{{ user.id }}"              
                           >Hapus</a>
                           <a href="{% url 'panel:changepassword' user.id %}" class="btn btn-outline-secondary my-2">Ubah Password</a>
                         </td>
                       </tr>
-                      <div class="modal fade" id="hapus-{{ data.id }}" tabindex="-1" aria-hidden="true">
+                      <div class="modal fade" id="hapus-{{ user.id }}" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -71,12 +71,12 @@
                             <div class="modal-body">
                               <div class="row">
                                 <div class="col mb-3">
-                                   <center><h5>Hapus Data <strong>#?</strong></h5></center>
+                                   <center><h5>Hapus Data <strong>{{user.username}}?</strong></h5></center>
                                 </div>
                               </div>
                             </div>
                             <div class="modal-footer">
-                              <a href="#" class="btn btn-danger">Hapus</a>
+                              <a href="{% url 'panel:deleteuser' user.id %}" class="btn btn-danger">Hapus</a>
                               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                 Batal
                               </button>
