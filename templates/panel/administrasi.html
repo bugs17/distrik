@@ -18,6 +18,8 @@
                                 <div class="col-md mb-4 mb-md-0">
                                   <small class="text-light fw-semibold">List layanan administrasi (klik untuk melihat persyaratan)</small>
                                   
+                                  {% if administrasi %}
+                                    
                                   {% for administrasi in administrasi %}
                                   <div class="accordion mt-3">
                                     <div class="card accordion-item">
@@ -93,6 +95,12 @@
                                       
                                   </div>
                                   {% endfor %}
+                                  {% else %}
+                                  <div style="margin-top: 30px;">
+
+                                    <P>Belum ada data administrasi yang di tambahkan!</P>
+                                  </div>
+                                  {% endif %}
 
                                 </div>
                         </div>

@@ -24,7 +24,14 @@
           data-bs-parent="#accordionExample"
         >
           <div class="accordion-body">
+            
+            {% if organisasi.gambar %}
             <center><img class="organisasi-img" src="{{ organisasi.gambar.url }}" alt="Gambar Struktur Organisasi"></center>
+            {% else %}
+            <center><img class="organisasi-img" src="{% static 'img/logo.png' %}" alt="Gambar Struktur Organisasi"></center>
+
+            {% endif %}
+              
             <div>
                 <div class="table-responsive text-nowrap">
                     <table class="table table-bordered">
@@ -39,6 +46,9 @@
                         </tr>
                       </thead>
                       <tbody>
+                        
+                        {% if camat %}
+
                         <tr>
                           <td>
                              <strong>{{camat.nama}}</strong>
@@ -55,12 +65,29 @@
                                 class="avatar avatar-xs pull-up"
                                 title="Foto Profil {{ camat.nama }}"
                               >
-                                <img src="{{camat.foto.url}}" alt="foto profil" class="rounded-circle" />
+                              
+                              {% if camat.foto %}
+                              <img src="{{camat.foto.url}}" alt="foto profil" class="rounded-circle" />
+                                {% else %}
+                                <img src="{% static 'img/user_blank.png' %}" alt="foto profil" class="rounded-circle" />
+                              {% endif %}
+                                
                               </li>
                             </ul>
                           </td>
                           <td><span>{{camat.pendidikan}}</span></td>
                         </tr>
+                        {% else %}
+                          <tr>
+                            <td>------</td>
+                            <td>------</td>
+                            <td>------</td>
+                            <td>------</td>
+                            <td>------</td>
+                          </tr>
+                        {% endif %}
+                          
+                       
                       </tbody>
                     </table>
                   </div>

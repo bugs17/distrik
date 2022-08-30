@@ -8,7 +8,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)
-    phone = models.IntegerField(null=True)
+    phone = models.CharField(max_length=12, null=True)
     foto = models.ImageField(blank=True, null=True, upload_to="image/")
 
 
