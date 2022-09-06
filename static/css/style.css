@@ -451,10 +451,17 @@
     color: #484848;
 }
 
+.text-administrasi:hover{
+    color: #0dcc0d;
+    transition: .5s ease-in-out;
+}
 
 
-
-
+@media (max-width: 767px){
+    .hide{
+        display: none !important;
+    }
+}
 
 
 

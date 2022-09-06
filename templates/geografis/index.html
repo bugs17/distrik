@@ -1,1 +1,41 @@
 {% extends '../subbase.html' %}
+
+
+
+{% block content %}
+    <div class="container">
+        
+        {% if geografis %}
+
+        {% for geografis in geografis %}
+        <div class="three">
+            <h1>{{ geografis.judul }}</h1>
+        </div>
+        
+        <div class="isi">
+            {{geografis.body | safe}}
+        </div>
+
+        <h6>Peta Lokasi Distrik Ninati</h6>
+        <!-- maps -->
+        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 450px; visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+            <div class="position-relative h-100">
+                {{peta | safe}}
+            </div>
+        </div>
+        <!-- end maps -->
+        {% endfor %}
+        {% else %}
+        <div class="three">
+            <h1>Geografis Distrik Ninati</h1>
+        </div>
+        
+        <div class="isi">
+            <p>Belum ada data geografis distrik yang di input.</p>
+            <p>Hubungi admin segera!</p>
+        </div>
+        {% endif %}
+            
+    </div>
+{% endblock content %}
+    

@@ -1,0 +1,190 @@
+{% extends '../subbase.html' %}
+
+{% block content %}
+   <div class="container">    
+
+    <div class="three">
+        <h1>Statistik</h1>
+    </div>
+    
+    <div class="isi">
+
+        <!-- canvas statistik disini -->
+        <center>
+            <h6 class="mb-4">Jumlah kepala keluarga berdasarkan Kampung</h6>
+            <div class="col-md-6 col-12 shadow">
+                <div class="chartBox">
+                    
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </center>
+        <br>
+        <br>
+        <center>
+            <h6 class="mb-4">Jumlah penduduk berdasarkan kampung</h6>
+            <div class="col-md-6 col-12 shadow">
+                <div class="chartBox">                  
+                    <canvas id="myChart2"></canvas>
+                </div>
+            </div>
+        </center>
+        <br>
+        <br>
+        <center>
+            <h6 class="mb-4">Jumlah pusat kesehatan</h6>
+            <div class="col-md-6 col-12 shadow">
+                <div class="chartBox">                  
+                    <canvas id="myChart3"></canvas>
+                </div>
+            </div>
+        </center>
+        
+    <!-- canvas end -->
+
+    </div>
+
+    </div>
+        
+    
+   </div>
+
+   <script>
+
+            // chart kepala keluarga
+            const data = {
+            
+            labels: [ {% if data %} {% for data in data%} '{{data.nama_kampung}}', {% endfor %} {% else %} 'belum ada data' {% endif %}],
+                datasets: [{
+                    label: 'Kepala keluarga',
+                    // data: [12, 19, 3, 5, 2, 3],
+                    data: [{% for data in data%} {{data.kk}}, {% endfor %}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgb(71, 197, 190, 1)',
+                       
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgb(71, 197, 190, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+        };
+
+
+        // config
+        const config = {
+            type: 'bar',
+            data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        // render init block
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+        // kepala keluarga end
+
+        // chart jumlah penduduk
+        const data2 = {
+            
+            labels: [{% if data %} {% for data in data%} '{{data.nama_kampung}}', {% endfor %} {% else %} 'belum ada data' {% endif %}],
+                datasets: [{
+                    label: 'Jumlah Jiwa',
+                    // data: [12, 19, 3, 5, 2, 3],
+                    data: [{% for data in data%} '{{data.jumlah_jiwa}}', {% endfor %}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                       
+                    ],
+                    borderColor: [
+                        'white',
+                        'white',
+                        'white',
+                        'white',
+                    ],
+                    borderWidth: 1
+                }]
+        };
+
+        // config 2
+        const config2 = {
+            type: 'pie',
+            data: data2,
+            options: {}
+        };
+
+        // render init block 2
+        const myChart2 = new Chart(
+            document.getElementById('myChart2'),
+            config2
+        );
+        // end jumlah penduduk
+
+        // puskesmas
+        const data3 = {
+        labels: [ {% if data %} {% for data in data%} '{{data.nama_kampung}}', {% endfor %} {% else %} 'belum ada data' {% endif %}],
+                datasets: [{
+                    label: 'Jumlah puskesmas',
+                    data: [{% for data in data%} {{data.puskesmas}}, {% endfor %}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgb(71, 197, 190, 1)',
+                       
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgb(71, 197, 190, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+        };
+
+        // config 2
+        const config3 = {
+            type: 'doughnut',
+            data: data3,
+            options: {}
+        };
+
+        // render init block 2
+        const myChart3 = new Chart(
+            document.getElementById('myChart3'),
+            config3
+        );
+   </script>
+   
+{% endblock content %}
+    

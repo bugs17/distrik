@@ -1,0 +1,24 @@
+{% extends '../subbase.html' %}
+
+
+{% block content %}
+   <div class="container">
+       
+    
+    {% for administrasi in administrasi %}
+        
+    <div class="three">
+        <h1>{{administrasi.nama_layanan}}</h1>
+    </div>
+
+
+    <div class="isi">
+        {{administrasi.persyaratan|safe}}
+    </div>
+    {% endfor %}
+        
+        
+    
+   </div>
+{% endblock content %}
+    

@@ -44,28 +44,30 @@ class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5 py-
     <div class="nav-item dropdown">
       <a
         href="#"
-        class="nav-link dropdown-toggle"
+        {% if request.path == "/pemerintah/" %}class="nav-link dropdown-toggle active"{% elif request.path == "/pemerintah/organisasi/" %}class="nav-link dropdown-toggle active" {% else %}class="nav-link dropdown-toggle"{% endif %}
         data-bs-toggle="dropdown"
         >Pemerintahan</a
       >
       <div class="dropdown-menu bg-light m-0">
-        <a href="#" class="dropdown-item">Pemerintah Distrik</a>
-        <a href="#" class="dropdown-item">Strukstur Organisasi</a>
+        <a href="{% url 'pemerintah:index' %}" class="dropdown-item">Pemerintah Distrik</a>
+        <a href="{% url 'pemerintah:organisasi' %}" class="dropdown-item">Strukstur Organisasi</a>
         
       </div>
     </div>
 
-    <a href="#" class="nav-item nav-link ">Statistik</a>
+    <a href="{% url 'statistik:index' %}" {% if request.path == "/statistik/" %} class="nav-item nav-link active" {% else %} class="nav-item nav-link" {% endif %}>Statistik</a>
 
     <div class="nav-item dropdown">
       <a
         href="#"
-        class="nav-link dropdown-toggle"
+        
+        {% if request.path == "/administrasi/" %}class="nav-link dropdown-toggle active" {% else %} class="nav-link dropdown-toggle" {% endif %}
+      
         data-bs-toggle="dropdown"
         >Layanan</a
       >
       <div class="dropdown-menu bg-light m-0">
-        <a href="#" class="dropdown-item">Administrasi</a>
+        <a href="{% url 'administrasi:index' %}" class="dropdown-item">Administrasi</a>
       </div>
     </div>
     <a href="contact.html" class="nav-item nav-link">Berita</a>

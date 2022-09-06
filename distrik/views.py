@@ -13,20 +13,6 @@ def index(request):
     administrasi = Administrasi.objects.all().order_by('-id')
     datastatistik = DataPerKampung.objects.all()
 
-    # kk = KepalaKeluarga.objects.all()
-    # semuaKampung= Populasi.objects.filter(jenisKelamin='P')
-
-    # kalkulasi jumlah jiwa berdasarkan kampung laki-laki + perempuan
-    # ninati = Populasi.objects.filter(kampung_id__nama='ninati').aggregate(Sum('jumlah'))
-    # abonggo = Populasi.objects.filter(kampung_id__nama='abonggo').aggregate(Sum('jumlah'))
-    # harapan = Populasi.objects.filter(kampung_id__nama='harapan').aggregate(Sum('jumlah'))
-    # mindip = Populasi.objects.filter(kampung_id__nama='mindip').aggregate(Sum('jumlah'))
-
-
-    # jumlahJiwa = [ninati, abonggo, harapan, mindip]
-    
-
-
 
     context = {
         'title': 'Beranda',

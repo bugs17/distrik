@@ -1,4 +1,8 @@
 from django.contrib import admin
 from .models import Administrasi
 
-admin.site.register(Administrasi)
+
+class AdministrasiAdmin(admin.ModelAdmin):
+    readonly_fields = ['slug',]
+
+admin.site.register(Administrasi,AdministrasiAdmin)

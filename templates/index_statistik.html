@@ -6,7 +6,7 @@
             <div class="three">
                 <h1>Statistik</h1>
             </div>
-            <div class="row gap-4 ">
+            <div class="row gap-4 item-center">
                 <div class="col-md-4 col-6 shadow">
                     <div class="chartBox">
                         <center><p>Jumlah kepala keluarga berdasarkan Kampung</p></center>
@@ -41,7 +41,7 @@
                 datasets: [{
                     label: 'Jumlah KK',
                     // data: [12, 19, 3, 5, 2, 3],
-                    data: [{% for data in data%} '{{data.kk}}', {% endfor %}],
+                    data: [{% for data in data%} {{data.kk}}, {% endfor %}],
                     backgroundColor: [
                         'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
@@ -92,11 +92,11 @@
     // setup
     const data2 = {
             
-            labels: [{% for kampung in semuaKampung %} '{{ kampung.kampung_id }}', {% endfor %}],
+            labels: [{% if data %} {% for data in data%} '{{data.nama_kampung}}', {% endfor %} {% else %} 'belum ada data' {% endif %}],
                 datasets: [{
                     label: 'Jumlah Jiwa',
                     // data: [12, 19, 3, 5, 2, 3],
-                    data: [{% for all in all %} {{all.jumlah__sum}}, {% endfor %}],
+                    data: [{% for data in data%} '{{data.jumlah_jiwa}}', {% endfor %}],
                     backgroundColor: [
                         'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',

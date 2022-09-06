@@ -1,0 +1,38 @@
+{% extends '../subbase.html' %}
+
+
+{% block content %}
+   <div class="container">
+       
+    <div class="isi">
+        <div class="row g-4">
+            
+            
+            {% if administrasi %}
+            {% for administrasi in administrasi %}
+                
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="shadow-sm p-5 text-administrasi" >
+                <a href="{% url 'administrasi:detail' administrasi.slug %}">
+                    <div class="border-start border-5 border-primary ps-4">
+                    <h4 class="display-20 mb-0 text-administrasi">
+                        {{administrasi.nama_layanan}}
+                    </h4>
+                    </div>
+                </a>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <center><p>Belum ada layanan administrasi</p></center>
+            {% endif %}
+                
+            
+                
+        </div>
+    </div>
+        
+    
+   </div>
+{% endblock content %}
+    

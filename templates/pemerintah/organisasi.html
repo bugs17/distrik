@@ -1,0 +1,70 @@
+{% extends '../subbase.html' %}
+{% load static %}
+
+{% block content %}
+   <div class="container">
+    
+    
+    {% for organisasi in organisasi %}
+    <div class="three">
+        <h1>{{organisasi.judul}}</h1>
+    </div>
+    
+    
+
+    <div class="isi">
+        
+        {% if organisasi.gambar %}
+        <div class="d-flex justify-content-center ">
+            <img class="w-75" src="{{organisasi.gambar.url}}" alt="Bagan Struktur Organisasi">
+        </div>
+        {% else %}
+        <div class="d-flex justify-content-center ">
+            <img class="w-50 p-3" src="{% static 'img/logo.png' %}" alt="">
+        </div>
+        {% endif %}
+
+        
+
+            <div class="justify-content-center hide" style="margin-top: 30px;">
+                <table class="table table-success table-striped">
+                    <thead>
+                        <tr>
+                          <th>Nama</th>
+                          <th>Jabatan</th>
+                          <th>Golongan</th>
+                          <th>Nip</th>
+                          <th>Pendidikan</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr>
+                          <td>
+                             <strong>Rionaldi lausiri</strong>
+                          </td>
+                          <td>Kepala Distrik</td>
+                          <td><span>3C</span></td>
+                          <td><span>009485766</span></td>
+                          
+                          <td><span>S1 Hukum</span></td>
+                        </tr>
+                        <tr>
+                          <td>
+                             <strong>Rionaldi lausiri</strong>
+                          </td>
+                          <td>Kepala Distrik</td>
+                          <td><span>3C</span></td>
+                          <td><span>009485766</span></td>
+                          
+                          <td><span>S1 Hukum</span></td>
+                        </tr>
+                      </tbody>
+                </table>
+            </div>
+       
+            
+    </div>
+    {% endfor %}
+   </div>
+{% endblock content %}
